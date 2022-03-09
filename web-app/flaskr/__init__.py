@@ -25,6 +25,16 @@ def create_app(test_config=None):
     def index():
         return "<h1>hello friends</h1>"
 
+    @app.route('/hello', methods=['GET'])
+    def hellohello():
+        print("hello")
+        return "<h1>hello hello baby</h1>"
+
+    @app.route('/hi', methods=['GET'])
+    def hihi():
+        print("hi")
+        return "<h1>hi hi baby</h1>"
+
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({

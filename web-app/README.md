@@ -27,5 +27,5 @@ On first run, execute `export FLASK_APP=flaskr`. Then run `flask run --reload` t
 ```powershell
 > $ENV:FLASK_DEBUG=1
 > $ENV:FLASK_APP="flaskr"
-> flask run --reload--host=0.0. 0.0
+> flask run --reload --host=0.0.0.0
 ```
