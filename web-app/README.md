@@ -29,3 +29,7 @@ On first run, execute `export FLASK_APP=flaskr`. Then run `flask run --reload` t
 > $ENV:FLASK_APP="flaskr"
 > flask run --reload --host=0.0.0.0
 ```
+
+### Run the GUI
+
+`python -m flaskr`

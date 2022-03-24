@@ -51,5 +51,6 @@ def create_app(test_config=None):
         }), 404
 
     return app
-    # if __name__ == "__main__":
-    #     app.run(debug=True)
+if __name__ == "__main__":
+    print("hello all")
+    # app.run(debug=True)
