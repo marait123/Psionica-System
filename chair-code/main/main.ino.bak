@@ -221,13 +221,6 @@ void loop()
 
         }
 		
-         if (currentLine.endsWith("GET /S"))
-        {
-          car.stop();
-
-        }
-		
-		
       }
     }
     // close the connection:

@@ -1,6 +1,6 @@
 from distutils.core import setup
 from logging import debug
-from flask import Flask, json, request, jsonify, abort
+from flask import Flask, json, request, jsonify, abort, render_template
 
 from flask_cors import CORS
 
@@ -23,8 +23,8 @@ def create_app(test_config=None):
 
     @app.route('/', methods=['GET'])
     def index():
-        return "<h1>hello friends</h1>"
-
+        return render_template('index.html')
+    
     @app.route('/hello', methods=['GET'])
     def hellohello():
         print("hello")
