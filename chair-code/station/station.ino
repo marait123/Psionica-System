@@ -1,114 +1,19 @@
-/*
-  WiFiAccessPoint.ino creates a WiFi access point and provides a web server on it.
-
-  Steps:
-  1. Connect to the access point "yourAp"
-  2. Point your web browser to http://192.168.4.1/H to turn the LED on or http://192.168.4.1/L to turn it off
-     OR
-     Run raw TCP "GET /H" and "GET /L" on PuTTY terminal with 192.168.4.1 as IP address and 80 as port
-
-  Created for arduino-esp32 on 04 July, 2018
-  by Elochukwu Ifediora (fedy0)
-*/
-
+#include <ArduinoJson.h>
+ 
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WiFiAP.h>
-
-// classes area
-class Arduino
-{
-public:
-  virtual void setup() = 0;
-};
-
-// motor
-/**
- * @brief https://howtomechatronics.com/tutorials/arduino/arduino-dc-motor-control-tutorial-l298n-pwm-h-bridge/
- *
- */
-class Motor : Arduino
-{
-  public:
-  int pin0, pin1;
-  Motor(int pin0, int pin1)
-  {
-    this->pin0 = pin0;
-    this->pin1 = pin1;
-  }
-  void setup()
-  {
-    pinMode(pin0, OUTPUT);
-    pinMode(pin1, OUTPUT);
-  }
-  void moveForward()
-  {
-    digitalWrite(pin0, LOW);
-    digitalWrite(pin1, HIGH);
-  }
-  void moveBackward()
-  {
-    digitalWrite(pin0, HIGH);
-    digitalWrite(pin1, LOW);
-  }
-  void stop()
-  {
-    digitalWrite(pin0, LOW);
-    digitalWrite(pin1, LOW);
-  }
-};
-
-Motor leftMotor(15, 2), rightMotor(5, 18);
-// this car moves in one of 4 directions
-class Car
-{
-private:
-public:
-  void setup()
-  {
-  
-  }
-  void stop()
-  {
-    leftMotor.stop();
-    rightMotor.stop();
-  }
-  void moveLeft()
-  {
-    leftMotor.stop();
-    rightMotor.moveForward();
-  }
-  void moveRight()
-  {
-    leftMotor.moveForward();
-    rightMotor.stop();
-  }
-  void moveForward()
-  {
-    rightMotor.moveForward();
-    leftMotor.moveForward();
-  }
-  void moveBackward()
-  {
-    rightMotor.moveBackward();
-    leftMotor.moveBackward();
-  }
-};
-// car definition
-Car car;
+#include<WebServer.h>
 
 // Set these to your desired credentials.
 const char *ssid = "yourAP";
 const char *password = "yourPassword";
 
-WiFiServer server(80);
-
+WebServer server(80);
 
 void setup() {
-   // setup the motors
-  leftMotor.setup();
-  rightMotor.setup();
-
+ 
+  server.enableCORS(); //This is the magic
 
   Serial.begin(115200);
   Serial.println();
@@ -122,80 +27,96 @@ void setup() {
   server.begin();
 
   Serial.println("Server started");
-}
-
-void loop() {
-  WiFiClient client = server.available();   // listen for incoming clients
-
-  if (client) {                             // if you get a client,
-    Serial.println("New Client.");           // print a message out the serial port
-    String currentLine = "";                // make a String to hold incoming data from the client
-    while (client.connected()) {            // loop while the client's connected
-      if (client.available()) {             // if there's bytes to read from the client,
-        char c = client.read();             // read a byte, then
-        Serial.write(c);                    // print it out the serial monitor
-        if (c == '\n') {                    // if the byte is a newline character
-
-          // if the current line is blank, you got two newline characters in a row.
-          // that's the end of the client HTTP request, so send a response:
-          if (currentLine.length() == 0) {
-            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-            // and a content-type so the client knows what's coming, then a blank line:
-            client.println("HTTP/1.1 200 OK");
-            client.println("Content-type:text/html");
-            client.println();
-
      
+  StaticJsonDocument<100> testDocument;
+   
+  testDocument["sensorType"] = "Temperature";
+  testDocument["value"] = 10;
+ 
+  char buffer[100];
+ 
+  serializeJson(testDocument, buffer);
+  Serial.println(buffer);
 
-            // the content of the HTTP response follows the header:
-            client.print("Click <a href=\"/F\">here</a> to go forward.<br>");
-            client.print("Click <a href=\"/B\">here</a>  to go backward.<br>");
-            client.print("Click <a href=\"/L\">here</a>  to go left.<br>");
-            client.print("Click <a href=\"/R\">here</a>  to go right.<br>");
-            client.print("Click <a href=\"/S\">here</a>  to stop.<br>");
+  server.on("/", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "OK";
+    
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
 
-            // The HTTP response ends with another blank line:
-            client.println();
-            // break out of the while loop:
-            break;
-          } else {    // if you got a newline, then clear currentLine:
-            currentLine = "";
-          }
-        } else if (c != '\r') {  // if you got anything else but a carriage return character,
-          currentLine += c;      // add it to the end of the currentLine
-        }
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done."));
+    });
+    
 
-        // Check to see if the client request was "GET /H" or "GET /L":
-        // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /F"))
-        {
-          car.moveForward();
-        }
-        if (currentLine.endsWith("GET /B"))
-        {
-          car.moveBackward();
+  server.on("/F", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "move forward";
+    doc["speed"] = 15;
 
-        }
-         if (currentLine.endsWith("GET /L"))
-        {
-          car.moveLeft();
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
 
-        }
-         if (currentLine.endsWith("GET /R"))
-        {
-          car.moveRight();
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done forward."));
+    });
+    
+  server.on("/B", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "move backward";
+    doc["speed"] = 10;
 
-        }
-        
-         if (currentLine.endsWith("GET /S"))
-        {
-          car.stop();
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
 
-        }
-      }
-    }
-    // close the connection:
-    client.stop();
-    Serial.println("Client Disconnected.");
-  }
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done forward."));
+    });
+    
+  server.on("/L", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "turning left";
+    doc["speed"] = 5;
+
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
+
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done forward."));
+    });
+    
+  server.on("/R", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "turning right";
+    doc["speed"] = 5;
+
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
+
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done forward."));
+    });
+    
+  server.on("/S", [](){
+     DynamicJsonDocument doc(512);
+    doc["status"] = "stop moving";
+    doc["speed"] = 0;
+
+    Serial.print(F("Stream..."));
+    String buf;
+    serializeJson(doc, buf);
+
+    server.send(201, F("application/json"), buf);
+    Serial.print(F("done forward."));
+    });
+}
+ 
+void loop() {
+ server.handleClient();
 }
