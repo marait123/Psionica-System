@@ -1,4 +1,5 @@
 
+
 testpoint () {
     x=$(curl --location --request GET "$1")
     # echo $x
