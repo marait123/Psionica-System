@@ -1,4 +1,5 @@
 function send_command(endpoint) {
+  // alert("hi");
   $.ajax({
     type: "GET",
     url: endpoint, //TODO: update request URL

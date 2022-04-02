@@ -4,7 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Get all greetings</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
     <script></script>
     <script
       type="text/javascript"
@@ -19,11 +27,46 @@
     <button onclick="send_command('http://192.168.4.1/L')">left</button>
 
     <button onclick="send_command('http://192.168.4.1/R')">right</button>
+    <button onclick="send_command('http://192.168.4.1/S')">stop</button>
     <p><a href="http://192.168.4.1/F">move forward</a></p>
     <p><a href="http://192.168.4.1/B">move back</a></p>
     <p><a href="http://192.168.4.1/L">move left</a></p>
     <p><a href="http://192.168.4.1/R">move right</a></p>
     <p><a href="http://192.168.4.1/S">stop</a></p>
+
+    <div class="jumbotron text-center">
+      <h1>My First Bootstrap Page</h1>
+      <p>Resize this responsive page to see the effect!</p>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Column 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 2</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 3</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+      </div>
+    </div>
     <!-- <script>
       console.log("ajax not working");
       $.ajax({
