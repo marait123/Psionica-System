@@ -24,6 +24,9 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET'])
     def index():
         return render_template('index.html')
+    @app.route('/dashboard', methods=['GET'])
+    def dashboard():
+        return render_template('dashboard.html')
     
     @app.route('/hello', methods=['GET'])
     def hellohello():

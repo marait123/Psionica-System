@@ -9,3 +9,4 @@ if __name__ == "__main__":
     print("hssello all")
     ui.run()
     # app.run(debug=True)
+# to run the app
