@@ -15,7 +15,9 @@ function send_command(endpoint) {
 let currentTab = ".manualTab";
 function TabChanged(e = null) {
   // Your Code goes here
-  let tabClassName = "." + window.location.hash.substring(1) + "Tab";
+  let tabClassName = window.location.hash
+    ? "." + window.location.hash.substring(1)
+    : currentTab;
   $(currentTab).hide();
   currentTab = tabClassName;
   $(currentTab).show();
@@ -28,4 +30,8 @@ $(function () {
   }, 10 / 00);
 
   $(window).on("hashchange", TabChanged);
+  $(".control").on("keydown", function (e) {
+    console.log(e);
+    console.log("you pressed", e.key);
+  });
 });
