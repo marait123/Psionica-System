@@ -56,12 +56,15 @@
         height: 100px;
         display: inline-block;
       }
-      .control {
+      .greenCard{
         margin-top: 20px;
         margin-bottom: 20px;
         background-color: #007A78;
         position: relative;
         min-height: 500px;
+      }
+      .control {
+     
       }
       .arrow {
         cursor: pointer;
