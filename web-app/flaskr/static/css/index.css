@@ -1,0 +1,134 @@
+    /* 
+    the part of the header
+    */
+       
+    * {
+        color: black;
+    }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color:#02735E    ;
+      }
+
+      li {
+        float: left;
+      }
+      li .logo{
+        display: block;
+        color:  #fff6bd;
+
+        /* color: white; */
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      li a {
+        display: block;
+        color:  #fff6bd;
+
+        /* color: white; */
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #fff6bd;
+        /* color:  ; */
+
+        text-decoration: none;
+      }
+/* arrow part */
+    :root {
+        --arrow_distance: 100px;
+        --white: #ffffff;
+    }
+        
+      .arrow {
+        position: absolute;
+      }
+
+      .arrow > img {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+      }
+      .control {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-color: #007A78;
+        position: relative;
+        min-height: 500px;
+      }
+      .arrow {
+        cursor: pointer;
+        background-color: #f3e37a;
+        width: 100px;
+        height: 100px;
+        top: 0;
+        bottom: 0;
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+      }
+      .right-arrow {
+        transform: translate(-50%, -50%) translate(105px, 0) translate(0,-45px);
+      }
+
+      .left-arrow {
+        transform: translate(-50%, -50%) translate(-105px, 0) translate(0,-45px);
+      }
+      .up-arrow {
+        transform: translate(-50%, -50%) translate(0, -105px) translate(0,-45px);
+      }
+
+      .down-arrow {
+        transform: translate(-50%, -50%) translate(0, 105px) translate(0,-45px);
+      }
+
+      .arrow:hover {
+        background-color: #f5dc34;
+      }
+      .arrow:active {
+        background-color: #d6c033;
+      }
+      .space {
+        cursor: pointer;
+        background-color: #f3e37a;
+        width: 250px;
+        height: 100px;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        bottom: 0;
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        transform: translate(-50%, -50%) translate(0, 230px) translate(0,-45px);
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        font-size: large;
+      }
+
+      .space:hover {
+        background-color: #f5dc34;
+      }
+      .space:active {
+        background-color: #d6c033;
+      }
+      .timeContainer {
+        color:  #bda717;
+
+        background-color: #007a78;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      .timeNow{
+        color:  #fff6bd;
+          
+      }
