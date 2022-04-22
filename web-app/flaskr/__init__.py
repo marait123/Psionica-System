@@ -3,6 +3,7 @@ from distutils.core import setup
 import imp
 from logging import debug
 import os
+import threading
 from urllib.robotparser import RequestRate
 from debugpy import connect
 from flask import Flask, json, request, jsonify, abort, render_template
@@ -11,24 +12,27 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, send,emit
 from numpy import broadcast
 from time import sleep
-simulation_status=False
 
-simulation_rate = 10 # in hz
+# simulation configuration
+simulation_status=False
+simulation_rate = 1 # in hz
 last_action = "stop"
 connected_clients = []
-def simulate():
+
+def simulate(app):
     global last_action
-    with open("data/commands.txt", "r") as f:
-        for line in f.readlines():
-            line = line.strip()
-            if line != "":
-                print(line)
-                print(connected_clients)
-                if len(connected_clients):
-                    for client in connected_clients:
-                        emit("new-action", {"action":line}, namespace=client['namespace'], room = client['room'])
-                last_action=line
-            sleep(1/simulation_rate)
+    with app.app_context():
+        with open("data/commands.txt", "r") as f:
+            for line in f.readlines():
+                line = line.strip()
+                if line != "":
+                    # print(line)
+                    # print(connected_clients)
+                    if len(connected_clients):
+                        for client in connected_clients:
+                            emit("new-action", {"action":line}, namespace=client['namespace'], room = client['room'])
+                    last_action=line
+                sleep(1/simulation_rate)
         
 # simulate()
 def create_app(test_config=None):
@@ -59,7 +63,8 @@ def create_app(test_config=None):
         
         if simulation_status == False:
             print('start of simulation')
-            simulate()
+            threading.Thread(target=simulate,args=(app,)).start()
+            # simulate()
             print("end of simulation")
         else:
             pass
