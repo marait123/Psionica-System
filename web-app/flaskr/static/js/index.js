@@ -12,6 +12,22 @@ function send_command(endpoint) {
     },
   });
 }
+let simulation_status = false;
+
+function toggle_simulation() {
+  $.ajax({
+    type: "PUT",
+    url: "/simulation", //TODO: update request URL
+    success: (result) => {
+      console.log("result is ", result);
+    },
+    error: (error) => {
+      console.error(error);
+      alert(error);
+    },
+  });
+}
+// on start code
 let currentTab = ".manualTab";
 function TabChanged(e = null) {
   // Your Code goes here
@@ -33,5 +49,18 @@ $(function () {
   $(".control").on("keydown", function (e) {
     console.log(e);
     console.log("you pressed", e.key);
+  });
+
+  $.ajax({
+    type: "GET",
+    url: "/simulation", //TODO: update request URL
+    success: (result) => {
+      console.log("get_simulation_status result is ", result);
+      simulation_status = result.simulation_status;
+    },
+    error: (error) => {
+      console.error(error);
+      alert(error);
+    },
   });
 });

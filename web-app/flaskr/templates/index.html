@@ -23,7 +23,92 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/index.css')}}"
     />
-    <style></style>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/socket.io.min.js') }}"
+    ></script>
+
+    <style>
+      .sim-btn {
+        /* position: absolute; */
+        /* right: 32px; */
+        /* top: 33px; */
+        /* min-width: 153px;
+        height: 35px;
+        align-self: flex-end;*/
+        margin-right: 10px;
+        height: 3.3em;
+      }
+      .simulation-header {
+        box-shadow: 0 2px 3px 0px #0c3838;
+        -webkit-box-shadow: 0 2px 3px 0px #0c3838;
+        -moz-box-shadow: 0 2px 3px 0px #0c3838;
+        /* border-bottom: 2px solid #0c3838; */
+        background-color: #195b5b;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: row;
+        min-height: 100px;
+      }
+      .simulation-body {
+        /* background-color: rgb(85, 138, 252); */
+        /* min-height: 250px; */
+        flex: auto;
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .sim-arrow {
+        /* position: absolute; */
+        cursor: pointer;
+        background-color: #f3e37a;
+        width: 100px;
+        height: 100px;
+        top: 0;
+        bottom: 0;
+        top: 50%;
+        left: 50%;
+        border-radius: 50px;
+      }
+      .move-right {
+        animation: slide 1s linear infinite alternate;
+      }
+      .no-move {
+        animation-play-state: running;
+
+        animation: slide 1s linear infinite alternate;
+      }
+      @keyframes slide {
+        0% {
+          transform: rotate(90deg);
+        }
+
+        100% {
+          /* background-color: red; */
+          transform: translate(100px, 0) rotate(90deg);
+        }
+      }
+    </style>
+    <script>
+      $(function () {
+        console.log("hi people");
+        var socket = io.connect(window.location.origin);
+        socket.on("connect", async () => {
+          let x = await socket.send("user has connected");
+        });
+        socket.on("message", async (data) => {
+          console.log("data received is ", data);
+        });
+        socket.on("new-action", async (data) => {
+          console.log("a new action arrived ", data);
+          console.log("the action is ", data["action"]);
+        });
+      });
+    </script>
   </head>
   <body>
     <ul>
@@ -44,6 +129,8 @@
       <div class="row manualTab">
         <div class="col-md-12">
           <div tabindex="0" class="greenCard control">
+            <!-- http://197.46.252.72:12345 -->
+            <!-- http://192.168.4.1 -->
             <div
               onclick="send_command('http://192.168.4.1/F')"
               class="arrow up-arrow"
@@ -88,7 +175,25 @@
       </div>
       <div style="display: none" class="row simulationTab">
         <div class="col-md-12">
-          <div class="greenCard">simulation tab</div>
+          <div class="greenCard">
+            <div class="simulation-header">
+              <button
+                onclick="toggle_simulation()"
+                type="button"
+                class="btn btn-info sim-btn"
+              >
+                start simulation
+              </button>
+            </div>
+            <div class="simulation-body">
+              <div onclick="" class="sim-arrow move-right">
+                <img
+                  src="{{ url_for('static', filename='img/up-arrow.png') }}"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

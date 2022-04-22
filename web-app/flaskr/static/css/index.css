@@ -57,6 +57,8 @@
         display: inline-block;
       }
       .greenCard{
+        display: flex;
+        flex-direction: column;
         margin-top: 20px;
         margin-bottom: 20px;
         background-color: #007A78;
