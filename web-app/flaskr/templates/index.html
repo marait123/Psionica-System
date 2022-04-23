@@ -75,14 +75,17 @@
         border-radius: 50px;
       }
       .move-right {
-        animation: slide 1s linear infinite alternate;
+        animation: slide_right 0.5s linear infinite alternate;
+      }
+      .move-left {
+        animation: slide_left 0.5s linear infinite alternate;
       }
       .no-move {
-        animation-play-state: running;
+        animation-play-state: paused;
 
-        animation: slide 1s linear infinite alternate;
+        /* animation: slide .1s linear infinite alternate; */
       }
-      @keyframes slide {
+      @keyframes slide_right {
         0% {
           transform: rotate(90deg);
         }
@@ -90,6 +93,49 @@
         100% {
           /* background-color: red; */
           transform: translate(100px, 0) rotate(90deg);
+        }
+      }
+
+      .move-left {
+        animation: slide_left 0.5s linear infinite alternate;
+      }
+
+      @keyframes slide_left {
+        0% {
+          transform: rotate(-90deg);
+        }
+
+        100% {
+          /* background-color: red; */
+          transform: translate(-100px, 0) rotate(-90deg);
+        }
+      }
+
+      .move-down {
+        animation: slide_down 0.5s linear infinite alternate;
+      }
+
+      @keyframes slide_down {
+        0% {
+          transform: rotate(180deg);
+        }
+
+        100% {
+          transform: translate(0, 100px) rotate(180deg);
+        }
+      }
+
+      .move-up {
+        animation: slide_up 0.5s linear infinite alternate;
+      }
+
+      @keyframes slide_up {
+        0% {
+          transform: rotate(0);
+        }
+
+        100% {
+          transform: translate(0, -100px) rotate(0);
         }
       }
     </style>
@@ -106,6 +152,9 @@
         socket.on("new-action", async (data) => {
           console.log("a new action arrived ", data);
           console.log("the action is ", data["action"]);
+          // <div id="sim-arrow" onclick="" class="sim-arrow move-right">
+          $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+          $("#sim-arrow").addClass("move-" + data["action"]);
         });
       });
     </script>
@@ -186,7 +235,7 @@
               </button>
             </div>
             <div class="simulation-body">
-              <div onclick="" class="sim-arrow move-right">
+              <div id="sim-arrow" onclick="" class="sim-arrow move-right">
                 <img
                   src="{{ url_for('static', filename='img/up-arrow.png') }}"
                   alt=""
