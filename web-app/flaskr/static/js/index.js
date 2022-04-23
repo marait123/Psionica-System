@@ -56,7 +56,15 @@ $(function () {
     url: "/simulation", //TODO: update request URL
     success: (result) => {
       console.log("get_simulation_status result is ", result);
-      simulation_status = result.simulation_status;
+      // simulation_status = result.simulation_status;
+      const { simulation_status, last_action } = result;
+      if (last_action == "stop") {
+        $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+        // $("#sim-arrow").addClass("no-move");
+      } else {
+        $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+        $("#sim-arrow").addClass("move-" + last_action);
+      }
     },
     error: (error) => {
       console.error(error);

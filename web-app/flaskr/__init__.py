@@ -21,7 +21,9 @@ connected_clients = []
 
 def simulate(app):
     global last_action
+    global simulation_status
     with app.app_context():
+        simulation_status=True
         with open("data/commands.txt", "r") as f:
             for line in f.readlines():
                 line = line.strip()
@@ -33,6 +35,11 @@ def simulate(app):
                             emit("new-action", {"action":line}, namespace=client['namespace'], room = client['room'])
                     last_action=line
                 sleep(1/simulation_rate)
+        if len(connected_clients):
+                for client in connected_clients:
+                    emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
+                last_action="stop"
+        simulation_status=False
         
 # simulate()
 def create_app(test_config=None):
@@ -55,7 +62,7 @@ def create_app(test_config=None):
     
     @app.route('/simulation', methods=['GET'])
     def get_simulation_status():
-        return jsonify(simulation_status=simulation_status)
+        return jsonify(simulation_status=simulation_status, last_action=last_action)
     
     @app.route('/simulation', methods=['PUT'])
     def toggle_simulation():
@@ -68,7 +75,7 @@ def create_app(test_config=None):
             print("end of simulation")
         else:
             pass
-        simulation_status= not simulation_status
+        # simulation_status= not simulation_status
         return jsonify(simulation_status=simulation_status)
     
     @app.route('/dashboard', methods=['GET'])

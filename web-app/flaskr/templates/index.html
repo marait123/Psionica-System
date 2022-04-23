@@ -156,6 +156,11 @@
           $("#sim-arrow").removeClass("move-left move-right move-up move-down");
           $("#sim-arrow").addClass("move-" + data["action"]);
         });
+        socket.on("end-simulation", async (data) => {
+          console.log("a new action arrived ", data);
+          console.log("the action is ", data["action"]);
+          $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+        });
       });
     </script>
   </head>
