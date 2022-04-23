@@ -4,6 +4,7 @@ import imp
 from logging import debug
 import os
 import threading
+import multiprocessing
 from urllib.robotparser import RequestRate
 from debugpy import connect
 from flask import Flask, json, request, jsonify, abort, render_template
@@ -26,6 +27,13 @@ def simulate(app):
         simulation_status=True
         with open("data/commands.txt", "r") as f:
             for line in f.readlines():
+                if simulation_status == False:
+                    #  stop the simulation
+                    if len(connected_clients):
+                        for client in connected_clients:
+                            emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
+                        last_action="stop"
+                    return
                 line = line.strip()
                 if line != "":
                     # print(line)
@@ -35,6 +43,7 @@ def simulate(app):
                             emit("new-action", {"action":line}, namespace=client['namespace'], room = client['room'])
                     last_action=line
                 sleep(1/simulation_rate)
+                
         if len(connected_clients):
                 for client in connected_clients:
                     emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
@@ -70,13 +79,14 @@ def create_app(test_config=None):
         
         if simulation_status == False:
             print('start of simulation')
+            
             threading.Thread(target=simulate,args=(app,)).start()
             # simulate()
             print("end of simulation")
         else:
-            pass
+            simulation_status = False
         # simulation_status= not simulation_status
-        return jsonify(simulation_status=simulation_status)
+        return jsonify(simulation_status=simulation_status, last_action=last_action)
     
     @app.route('/dashboard', methods=['GET'])
     def dashboard():

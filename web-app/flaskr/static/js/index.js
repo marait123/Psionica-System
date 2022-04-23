@@ -1,3 +1,29 @@
+const SimulationButton = {
+  update: function () {
+    $.ajax({
+      type: "GET",
+      url: "/simulation",
+      success: (result) => {
+        const { simulation_status } = result;
+        console.log("result is ", result);
+        let simBtn = document.getElementById("sim-btn");
+
+        if (simulation_status == false) {
+          simBtn.style.backgroundColor = "#17a2b8";
+          simBtn.innerHTML = "start simulation";
+        } else {
+          simBtn.style.backgroundColor = "red";
+          simBtn.innerHTML = "stop simulation";
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        alert(error);
+      },
+    });
+  },
+};
+
 function send_command(endpoint) {
   // alert("hi");
   $.ajax({
@@ -19,7 +45,9 @@ function toggle_simulation() {
     type: "PUT",
     url: "/simulation", //TODO: update request URL
     success: (result) => {
+      const { simulation_status } = result;
       console.log("result is ", result);
+      SimulationButton.update();
     },
     error: (error) => {
       console.error(error);
@@ -55,9 +83,14 @@ $(function () {
     type: "GET",
     url: "/simulation", //TODO: update request URL
     success: (result) => {
-      console.log("get_simulation_status result is ", result);
       // simulation_status = result.simulation_status;
       const { simulation_status, last_action } = result;
+      console.log("get_simulation_status result is ", {
+        simulation_status,
+        last_action,
+      });
+
+      SimulationButton.update();
       if (last_action == "stop") {
         $("#sim-arrow").removeClass("move-left move-right move-up move-down");
         // $("#sim-arrow").addClass("no-move");
