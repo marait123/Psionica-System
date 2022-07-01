@@ -20,7 +20,7 @@ $(function () {
       down: "B",
     };
 
-    send_command("http://156.223.70.165:12345/" + actionMap[data["action"]]);
+    send_command("http://192.168.4.1:80/" + actionMap[data["action"]]);
   });
   socket.on("end-simulation", async (data) => {
     console.log("a new action arrived ", data);

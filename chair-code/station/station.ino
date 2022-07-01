@@ -4,7 +4,9 @@
 #include <WiFiClient.h>
 #include <WiFiAP.h>
 #include <WebServer.h>
-
+// the follownig variables enables the car to execute 1 motion command for no more that MOVETIME milliseconds
+unsigned long MOVETIME=3000; // this is 3000 milli seconds
+int motion_start_time = 0;
 // classes area
 class Arduino
 {
@@ -53,38 +55,65 @@ Motor leftMotor(15, 2), rightMotor(5, 18);
 class Car
 {
 private:
-public:
-  void setup()
-  {
+  Motor *leftMotor, *rightMotor;
+  unsigned long start_time = 0;
+  bool is_moving = false;
+  void startMove(){
+    start_time = millis();
+    is_moving = true;
   }
+  void endMove(){
+    is_moving = false;
+
+  }
+public:
+  Car(Motor& leftMotor, Motor& rightMotor){
+    this->leftMotor = &leftMotor;
+    this->rightMotor = &rightMotor;
+  }
+  
   void stop()
   {
-    leftMotor.stop();
-    rightMotor.stop();
+    this->endMove();
+    (*leftMotor).stop();
+    (*rightMotor).stop();
   }
   void moveLeft()
   {
-    leftMotor.stop();
-    rightMotor.moveForward();
+    this->startMove();
+    (*leftMotor).stop();
+    (*rightMotor).moveForward();
   }
   void moveRight()
   {
-    leftMotor.moveForward();
-    rightMotor.stop();
+    this->startMove();
+    (*leftMotor).moveForward();
+    (*rightMotor).stop();
   }
   void moveForward()
   {
-    rightMotor.moveForward();
-    leftMotor.moveForward();
+    this->startMove();
+    (*rightMotor).moveForward();
+    (*leftMotor).moveForward();
   }
   void moveBackward()
   {
-    rightMotor.moveBackward();
-    leftMotor.moveBackward();
+    this->startMove();
+    (*rightMotor).moveBackward();
+    (*leftMotor).moveBackward();
+  }
+  void setup()
+  {
+  }
+  void loop(){
+    
+    if(is_moving && millis() > MOVETIME + start_time ){
+      this->stop();
+    }  
   }
 };
 // car definition
-Car car;
+Car car (leftMotor, rightMotor);
 
 // Set these to your desired credentials.
 const char *ssid = "yourAP";
@@ -165,6 +194,7 @@ void setup()
 
   server.on("/F", []()
             {
+     motion_start_time = millis();
      DynamicJsonDocument doc(512);
     doc["status"] = "move forward";
     doc["speed"] = 15;
@@ -172,13 +202,16 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    rightMotor.moveForward();
-    leftMotor.moveForward();
+    // rightMotor.moveForward();
+    // leftMotor.moveForward();
+    car.moveForward();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
 
   server.on("/B", []()
             {
+       motion_start_time = millis();
+
      DynamicJsonDocument doc(512);
     doc["status"] = "move backward";
     doc["speed"] = 10;
@@ -186,27 +219,32 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    rightMotor.moveBackward();
-    leftMotor.moveBackward();
+    // rightMotor.moveBackward();
+    // leftMotor.moveBackward();
+    car.moveBackward();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
 
   server.on("/L", []()
             {
-     DynamicJsonDocument doc(512);
+     motion_start_time = millis();
+    DynamicJsonDocument doc(512);
     doc["status"] = "turning left";
     doc["speed"] = 5;
 
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    leftMotor.stop();
-    rightMotor.moveForward();
+    // leftMotor.stop();
+    // rightMotor.moveForward();
+    car.moveLeft();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
 
   server.on("/R", []()
             {
+     motion_start_time = millis();
+             
      DynamicJsonDocument doc(512);
     doc["status"] = "turning right";
     doc["speed"] = 5;
@@ -214,8 +252,9 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    leftMotor.moveForward();
-    rightMotor.stop();
+    // leftMotor.moveForward();
+    // rightMotor.stop();
+    car.moveRight();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
 
@@ -236,5 +275,11 @@ void setup()
 
 void loop()
 {
+//  passed_Time = millis() - motion_start_time;
+//  if(abs() >= MOVETIME ){
+//    leftMotor.stop();
+//    rightMotor.stop();
+//    }
+  car.loop();
   server.handleClient();
 }
