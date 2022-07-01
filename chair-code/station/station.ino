@@ -202,8 +202,6 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    // rightMotor.moveForward();
-    // leftMotor.moveForward();
     car.moveForward();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
@@ -219,8 +217,6 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    // rightMotor.moveBackward();
-    // leftMotor.moveBackward();
     car.moveBackward();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
@@ -235,8 +231,6 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    // leftMotor.stop();
-    // rightMotor.moveForward();
     car.moveLeft();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
@@ -252,8 +246,7 @@ void setup()
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
-    // leftMotor.moveForward();
-    // rightMotor.stop();
+
     car.moveRight();
     server.send(201, F("application/json"), buf);
     Serial.print(F("done forward.")); });
@@ -275,11 +268,7 @@ void setup()
 
 void loop()
 {
-//  passed_Time = millis() - motion_start_time;
-//  if(abs() >= MOVETIME ){
-//    leftMotor.stop();
-//    rightMotor.stop();
-//    }
+
   car.loop();
   server.handleClient();
 }
