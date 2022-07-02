@@ -19,8 +19,8 @@ $(function () {
       up: "F",
       down: "B",
     };
-
-    send_command("http://192.168.4.1:80/" + actionMap[data["action"]]);
+    // TODO: put the ip in a single place
+    send_command(`${PHONE_IP}/` + actionMap[data["action"]]);
   });
   socket.on("end-simulation", async (data) => {
     console.log("a new action arrived ", data);

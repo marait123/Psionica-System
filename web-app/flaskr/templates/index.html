@@ -13,6 +13,10 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/setup.js') }}"
+  ></script>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
     <script
@@ -58,9 +62,9 @@
         <div class="col-md-12">
           <div tabindex="0" class="greenCard control">
             <!-- http://197.46.252.72:12345 -->
-            <!-- http://192.168.4.1 -->
+            <!-- ${PHONE_IP} -->
             <div
-              onclick="send_command('http://192.168.4.1/F')"
+              onclick="send_command(`${PHONE_IP}/F`)"
               class="arrow up-arrow"
             >
               <img
@@ -69,7 +73,7 @@
               />
             </div>
             <div
-              onclick="send_command('http://192.168.4.1/L')"
+              onclick="send_command(`${PHONE_IP}/L`)"
               class="arrow left-arrow"
             >
               <img
@@ -78,7 +82,7 @@
               />
             </div>
             <div
-              onclick="send_command('http://192.168.4.1/R')"
+              onclick="send_command(`${PHONE_IP}/R`)"
               class="arrow right-arrow"
             >
               <img
@@ -87,7 +91,7 @@
               />
             </div>
             <div
-              onclick="send_command('http://192.168.4.1/B')"
+              onclick="send_command(`${PHONE_IP}/B`)"
               class="arrow down-arrow"
             >
               <img
@@ -95,7 +99,7 @@
                 alt=""
               />
             </div>
-            <div onclick="send_command('http://192.168.4.1/S')" class="space">
+            <div onclick="send_command(`${PHONE_IP}/S`)" class="space">
               stop
             </div>
           </div>

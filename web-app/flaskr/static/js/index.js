@@ -34,7 +34,7 @@ function send_command(endpoint) {
     },
     error: (error) => {
       console.error(error);
-      alert(error);
+      // alert(error);
     },
   });
 }
