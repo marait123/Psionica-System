@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, send,emit
 from numpy import broadcast
 from time import sleep
+import socket
 
 # simulation configuration
 simulation_status=False
@@ -64,6 +65,13 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET'])
     def index():
         return render_template('index.html')
+        
+    @app.route('/who', methods=['GET'])
+    def who():
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+
+        return jsonify(answer="simulator", hostname=hostname, ip=local_ip, port=12345)
     
     @app.route('/simulation', methods=['GET'])
     def get_simulation_status():

@@ -26,12 +26,12 @@ public:
     pinMode(pin0, OUTPUT);
     pinMode(pin1, OUTPUT);
   }
-  void moveForward()
+  void moveBackward()
   {
     digitalWrite(pin0, LOW);
     digitalWrite(pin1, HIGH);
   }
-  void moveBackward()
+  void moveForward()
   {
     digitalWrite(pin0, HIGH);
     digitalWrite(pin1, LOW);
