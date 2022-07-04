@@ -96,7 +96,7 @@ public:
       this->stop();
     }
     else{
-      Serial.println("this is an unhandled case please review the loop of the car");
+//      Serial.println("this is an unhandled case please review the loop of the car");
     }
 
   // the car issue the car when moving forward it inclines to the left since the right motor 

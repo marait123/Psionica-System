@@ -8,6 +8,7 @@
 #include"car.h"
 //#include"sonar.h"
 
+
 //define sound speed in cm/uS
 #define SOUND_SPEED 0.034
 class Sonar{
@@ -32,7 +33,7 @@ public:
     pinMode(echoPin, INPUT); // Sets the echoPin as an Input
   }
 
-  int sonar_get_distance(){
+  int get_distance(){
     
       // Clears the trigPin
       digitalWrite(trigPin, LOW);
@@ -101,7 +102,7 @@ WebServer server(port);
 void setup()
 {
 //  sonar_setup();
-//frontSonar.setup();
+frontSonar.setup();
 //  wifi issue that sta goes to sleep and hangs incoming connection
   WiFi.setSleep(false);
   
@@ -288,11 +289,11 @@ void loop()
 {
 
   //  sonar_get_distance();
-//  int distanceCm = frontSonar.get_distance();
+  int distanceCm = frontSonar.get_distance();
   
   // Prints the distance in the Serial Monitor
-//  Serial.print("Distance (cm): ");
-//  Serial.println(distanceCm);
+  Serial.print("Distance (cm): ");
+  Serial.println(distanceCm);
   
   // this is where server handles clients
   server.handleClient();
