@@ -6,9 +6,59 @@
 #include <WebServer.h>
 #include"motor.h"
 #include"car.h"
+//#include"sonar.h"
+
+//define sound speed in cm/uS
+#define SOUND_SPEED 0.034
+class Sonar{
+private:
+
+  //trig 13  echo  12 for front sonar
+  int trigPin ;
+  int echoPin;
+  long duration;
+  float distanceCm;
 
 
-#include <ESP32Servo.h> 
+public:
+
+  Sonar(int trigPin, int echoPin){
+    this->trigPin =  trigPin;
+    this->echoPin = echoPin;
+   }
+  // sonar setup
+  void setup() {
+    pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  }
+
+  int sonar_get_distance(){
+    
+      // Clears the trigPin
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+      // Sets the trigPin on HIGH state for 10 micro seconds
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+      
+      // Reads the echoPin, returns the sound wave travel time in microseconds
+      duration = pulseIn(echoPin, HIGH);
+      
+      // Calculate the distance
+      distanceCm = duration * SOUND_SPEED/2;
+      
+      return distanceCm;
+    }
+
+  void loop(){
+    
+  }
+  
+};
+
+
+
 
 // the follownig variables enables the car to execute 1 motion command for no more that MOVETIME milliseconds
 int motion_start_time = 0;
@@ -31,6 +81,8 @@ IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8);   //optional
 IPAddress secondaryDNS(8, 8, 4, 4); //optional
 
+//sonar definition
+Sonar frontSonar(13,12);
 
 // car definition
 Car car (leftMotor, rightMotor);
@@ -45,8 +97,11 @@ bool station_mode = false;
 int port = 12345;
 WebServer server(port);
 
+
 void setup()
 {
+//  sonar_setup();
+//frontSonar.setup();
 //  wifi issue that sta goes to sleep and hangs incoming connection
   WiFi.setSleep(false);
   
@@ -228,10 +283,18 @@ void setup()
     Serial.print(F("done forward.")); });
 }
 
+
 void loop()
 {
-// write the pwm
 
+  //  sonar_get_distance();
+//  int distanceCm = frontSonar.get_distance();
+  
+  // Prints the distance in the Serial Monitor
+//  Serial.print("Distance (cm): ");
+//  Serial.println(distanceCm);
+  
+  // this is where server handles clients
   server.handleClient();
 
   car.loop();

@@ -99,12 +99,13 @@ public:
       Serial.println("this is an unhandled case please review the loop of the car");
     }
 
-  // the car issue 
-    if(is_moving_forward){
+  // the car issue the car when moving forward it inclines to the left since the right motor 
+  // is more powerfull compared to the left but this doesn't happen in the backward direction
+    if(is_moving_forward ||  is_moving_right){
       //  do this if moving forward
       ledcWrite(0, 180); // set the brightness of the LED
       ledcWrite(1, 230); // set the brightness of the LED 
-    }else if (is_moving_backward){
+    }else if (is_moving_backward || is_moving_left){
       // do this if moving backward
       ledcWrite(0, 200); // set the brightness of the LED
       ledcWrite(1, 200); // set the brightness of the LED 
