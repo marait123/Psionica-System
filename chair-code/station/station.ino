@@ -6,60 +6,30 @@
 #include <WebServer.h>
 #include"motor.h"
 #include"car.h"
-//#include"sonar.h"
+#include"sonar.h"
 
-
-//define sound speed in cm/uS
-#define SOUND_SPEED 0.034
-class Sonar{
-private:
-
-  //trig 13  echo  12 for front sonar
-  int trigPin ;
-  int echoPin;
-  long duration;
-  float distanceCm;
-
-
-public:
-
-  Sonar(int trigPin, int echoPin){
-    this->trigPin =  trigPin;
-    this->echoPin = echoPin;
-   }
-  // sonar setup
-  void setup() {
-    pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
-    pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-  }
-
-  int get_distance(){
-    
-      // Clears the trigPin
-      digitalWrite(trigPin, LOW);
-      delayMicroseconds(2);
-      // Sets the trigPin on HIGH state for 10 micro seconds
-      digitalWrite(trigPin, HIGH);
-      delayMicroseconds(10);
-      digitalWrite(trigPin, LOW);
-      
-      // Reads the echoPin, returns the sound wave travel time in microseconds
-      duration = pulseIn(echoPin, HIGH);
-      
-      // Calculate the distance
-      distanceCm = duration * SOUND_SPEED/2;
-      
-      return distanceCm;
+class Led{
+  private:
+    int pin;
+  public:
+    bool is_on = false;
+    Led(int pin){
+      this->pin = pin;
     }
-
-  void loop(){
-    
-  }
-  
-};
-
-
-
+    void setup(){
+      
+      pinMode(this->pin, OUTPUT);
+    }
+    void turnOn(){
+      is_on = true;
+      digitalWrite(this->pin, HIGH);  
+    }
+    void turnOff(){
+      is_on = false;
+      digitalWrite(this->pin, LOW);  
+    }
+  };
+Led connectedLed(19), onLed(21);
 
 // the follownig variables enables the car to execute 1 motion command for no more that MOVETIME milliseconds
 int motion_start_time = 0;
@@ -83,7 +53,7 @@ IPAddress primaryDNS(8, 8, 8, 8);   //optional
 IPAddress secondaryDNS(8, 8, 4, 4); //optional
 
 //sonar definition
-Sonar frontSonar(13,12);
+//Sonar frontSonar(13,12);
 
 // car definition
 Car car (leftMotor, rightMotor);
@@ -101,8 +71,14 @@ WebServer server(port);
 
 void setup()
 {
-//  sonar_setup();
-frontSonar.setup();
+
+//  status leds
+
+connectedLed.setup();
+onLed.setup();
+
+// car 
+car.setup();
 //  wifi issue that sta goes to sleep and hangs incoming connection
   WiFi.setSleep(false);
   
@@ -285,19 +261,44 @@ frontSonar.setup();
 }
 
 
+unsigned long previousMillis = 0;
+unsigned long interval = 5000;
+
+unsigned long onPrevMillis = 0;
 void loop()
 {
 
-  //  sonar_get_distance();
-  int distanceCm = frontSonar.get_distance();
-  
-  // Prints the distance in the Serial Monitor
-  Serial.print("Distance (cm): ");
-  Serial.println(distanceCm);
-  
+
   // this is where server handles clients
   server.handleClient();
 
   car.loop();
   delay(100);
+
+  //  wifi lost connection solved
+  unsigned long currentMillis = millis();
+  // if WiFi is down, try reconnecting
+  if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >=interval)) {
+    Serial.print(millis());
+    Serial.println("Reconnecting to WiFi...");
+    WiFi.disconnect();
+    WiFi.reconnect();
+    previousMillis = currentMillis;
+  }
+
+    if(WiFi.status() == WL_CONNECTED) {
+      connectedLed.turnOn();
+      
+    }else{
+      connectedLed.turnOff();
+    }
+  // onLed will switch on and off every 1000seconds
+  if(currentMillis - onPrevMillis >= 1000){
+      if(onLed.is_on){
+        onLed.turnOff();
+      }else{
+        onLed.turnOn();
+      }
+      onPrevMillis = currentMillis;
+    }
 }

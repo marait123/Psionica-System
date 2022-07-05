@@ -3,6 +3,7 @@
 // add here 
 #include<Arduino.h>
 #include"motor.h"
+#include"sonar.h"
 // X means forward and backward ,
 unsigned long MOVETIME_X=250; // this is MOVETIME milli seconds
 // Y means left and right
@@ -18,6 +19,10 @@ class Car
 {
 private:
   Motor *leftMotor, *rightMotor;
+  
+//    Sonar frontSonar;
+
+  
   unsigned long start_time = 0;
   bool is_moving_left = false;
   bool is_moving_right = false;
@@ -38,11 +43,14 @@ private:
   is_moving_backward = false;
   }
 public:
-  Car(Motor& leftMotor, Motor& rightMotor){
+  Car(Motor& leftMotor, Motor& rightMotor){ //:frontSonar(13,12)
     this->leftMotor = &leftMotor;
     this->rightMotor = &rightMotor;
   }
-  
+  void setup()
+  {
+//    frontSonar.setup();
+  }
   void stop()
   {
     this->endMove();
@@ -78,9 +86,7 @@ public:
     (*rightMotor).moveBackward();
     (*leftMotor).moveBackward();
   }
-  void setup()
-  {
-  }
+
   void loop(){
    
     if(is_moving_left && millis() > MOVETIME_LEFT + start_time ){
@@ -98,6 +104,14 @@ public:
     else{
 //      Serial.println("this is an unhandled case please review the loop of the car");
     }
+
+
+  //  sonar_get_distance();
+//  int distanceCm = frontSonar.get_distance();
+//  
+//  // Prints the distance in the Serial Monitor
+//  Serial.print("Distance (cm): ");
+//  Serial.println(distanceCm);
 
   // the car issue the car when moving forward it inclines to the left since the right motor 
   // is more powerfull compared to the left but this doesn't happen in the backward direction
