@@ -20,7 +20,7 @@ class Car
 private:
   Motor *leftMotor, *rightMotor;
   
-//    Sonar frontSonar;
+  Sonar backSonar;
 
   
   unsigned long start_time = 0;
@@ -36,20 +36,20 @@ private:
 //    is_moving = true;
   }
   void endMove(){
-  //    is_moving = false;
-  is_moving_left = false;
-  is_moving_right = false;
-  is_moving_forward = false; 
-  is_moving_backward = false;
+    //    is_moving = false;
+    is_moving_left = false;
+    is_moving_right = false;
+    is_moving_forward = false; 
+    is_moving_backward = false;
   }
 public:
-  Car(Motor& leftMotor, Motor& rightMotor){ //:frontSonar(13,12)
+  Car(Motor& leftMotor, Motor& rightMotor):backSonar(13,12){ //:backSonar(13,12)
     this->leftMotor = &leftMotor;
     this->rightMotor = &rightMotor;
   }
   void setup()
   {
-//    frontSonar.setup();
+    backSonar.setup();
   }
   void stop()
   {
@@ -86,32 +86,36 @@ public:
     (*rightMotor).moveBackward();
     (*leftMotor).moveBackward();
   }
-
+  int get_back_distance(){
+  
+    return backSonar.get_distance();
+  }
   void loop(){
    
+
+
+    //  sonar_get_distance();
+    int backDistance = backSonar.get_distance();
+    // Prints the distance in the Serial Monitor
+      Serial.print("backDistance (cm): ");
+      Serial.println(backDistance);
+
+
     if(is_moving_left && millis() > MOVETIME_LEFT + start_time ){
       this->stop();
     }
     else if(is_moving_right && millis() > MOVETIME_RIGHT + start_time ){
       this->stop();
     }
-    else if(is_moving_forward && millis() > MOVETIME_FORWARD + start_time ){
+    else if(is_moving_forward && (millis() > MOVETIME_FORWARD + start_time )){
       this->stop();
     }
-    else if(is_moving_backward && millis() > MOVETIME_BACKWARD + start_time ){
+    else if(is_moving_backward &&( millis() > MOVETIME_BACKWARD + start_time || backDistance < 20)){
       this->stop();
     }
     else{
 //      Serial.println("this is an unhandled case please review the loop of the car");
     }
-
-
-  //  sonar_get_distance();
-//  int distanceCm = frontSonar.get_distance();
-//  
-//  // Prints the distance in the Serial Monitor
-//  Serial.print("Distance (cm): ");
-//  Serial.println(distanceCm);
 
   // the car issue the car when moving forward it inclines to the left since the right motor 
   // is more powerfull compared to the left but this doesn't happen in the backward direction
@@ -119,7 +123,7 @@ public:
       //  do this if moving forward
       ledcWrite(0, 180); // set the brightness of the LED
       ledcWrite(1, 230); // set the brightness of the LED 
-    }else if (is_moving_backward || is_moving_left){
+    }else{ //else if (is_moving_backward || is_moving_left)
       // do this if moving backward
       ledcWrite(0, 200); // set the brightness of the LED
       ledcWrite(1, 200); // set the brightness of the LED 

@@ -58,13 +58,20 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="timeContainer">
+            predicted vs true action <span class="predVsTrue">-----</span>
+          </div>
+        </div>
+      </div>
       <div class="row manualTab">
         <div class="col-md-12">
           <div tabindex="0" class="greenCard control">
             <!-- http://197.46.252.72:12345 -->
             <!-- ${PHONE_IP} -->
             <div
-              onclick="send_command(`${PHONE_IP}/F`)"
+              onclick="send_command(`F`)"
               class="arrow up-arrow"
             >
               <img
@@ -73,7 +80,7 @@
               />
             </div>
             <div
-              onclick="send_command(`${PHONE_IP}/L`)"
+              onclick="send_command(`L`)"
               class="arrow left-arrow"
             >
               <img
@@ -82,7 +89,7 @@
               />
             </div>
             <div
-              onclick="send_command(`${PHONE_IP}/R`)"
+              onclick="send_command(`R`)"
               class="arrow right-arrow"
             >
               <img
@@ -91,7 +98,7 @@
               />
             </div>
             <div
-              onclick="send_command(`${PHONE_IP}/B`)"
+              onclick="send_command(`B`)"
               class="arrow down-arrow"
             >
               <img
@@ -99,7 +106,7 @@
                 alt=""
               />
             </div>
-            <div onclick="send_command(`${PHONE_IP}/S`)" class="space">
+            <div onclick="send_command(`S`)" class="space">
               stop
             </div>
           </div>
@@ -119,7 +126,7 @@
               </button>
             </div>
             <div class="simulation-body">
-              <div id="sim-arrow" onclick="" class="sim-arrow move-right">
+              <div id="sim-arrow" onclick="" class="sim-arrow move-R">
                 <img
                   src="{{ url_for('static', filename='img/up-arrow.png') }}"
                   alt=""

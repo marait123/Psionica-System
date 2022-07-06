@@ -2,6 +2,7 @@ from argparse import Namespace
 # from distutils.core import setup
 import imp
 from logging import debug
+from random import random,randint
 import threading
 from flask import Flask,  request, jsonify,  render_template
 
@@ -10,16 +11,25 @@ from flask_socketio import SocketIO, send,emit
 from numpy import broadcast
 from time import sleep
 import socket
+from model.preprocessing import efficient_predict, model,read_file_sim
+
+test_data, actions = read_file_sim(8)
+# print(test_data.shape, actions)
+data_hash ={"L":[], "R":[], "B":[], "F":[]}
+for one_datum, one_label in zip(test_data, actions):
+    data_hash[one_label].append(one_datum)
 
 # simulation configuration
 simulation_status=False
-simulation_rate = 1 # in hz
+simulation_step = 2 # in seconds
 last_action = "stop"
 connected_clients = []
-
+# test_data, test_label =  
 def simulate(app):
     global last_action
     global simulation_status
+    correct_predictions = 0
+    miss_predictions = 0
     with app.app_context():
         simulation_status=True
         with open("data/commands.txt", "r") as f:
@@ -28,7 +38,7 @@ def simulate(app):
                     #  stop the simulation
                     if len(connected_clients):
                         for client in connected_clients:
-                            emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
+                            emit("end-simulation", {"action":"stop","miss_predictions":miss_predictions,"correct_predictions":correct_predictions}, namespace=client['namespace'], room = client['room'])
                         last_action="stop"
                     return
                 line = line.strip()
@@ -37,9 +47,19 @@ def simulate(app):
                     # print(connected_clients)
                     if len(connected_clients):
                         for client in connected_clients:
-                            emit("new-action", {"action":line}, namespace=client['namespace'], room = client['room'])
+                            data_to_choose_from = data_hash[line]
+                            n = len(data_to_choose_from) 
+                            action_random_thinking_index = randint(0,n-1)
+                            predicted_label = efficient_predict(data_to_choose_from[action_random_thinking_index])
+                            print()
+                            if line != predicted_label:
+                                miss_predictions+=1
+                            else:
+                                correct_predictions+=1
+                            # return jsonify()
+                            emit("new-action", {"true_action":line,"predicted_action":predicted_label}, namespace=client['namespace'], room = client['room'])
                     last_action=line
-                sleep(1/simulation_rate)
+                sleep(simulation_step)
                 
         if len(connected_clients):
                 for client in connected_clients:
@@ -95,6 +115,19 @@ def create_app(test_config=None):
     @app.route('/dashboard', methods=['GET'])
     def dashboard():
         return render_template('dashboard.html')
+    
+    @app.route('/prediction', methods=['GET'])
+    def predict_actions():
+        action = request.args.get("action",None)
+        assert action is not None
+
+        print("action sent is ", action)
+        data_to_choose_from = data_hash[action]
+        n = len(data_to_choose_from) 
+        action_random_thinking_index = randint(0,n-1)
+        predicted_label = efficient_predict(data_to_choose_from[action_random_thinking_index])
+        print()
+        return jsonify(prediction=predicted_label)
 
 
     @app.errorhandler(422)

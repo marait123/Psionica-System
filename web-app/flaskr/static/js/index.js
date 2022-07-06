@@ -24,19 +24,35 @@ const SimulationButton = {
   },
 };
 
-function send_command(endpoint) {
+function send_command( action) {
   // alert("hi");
   $.ajax({
     type: "GET",
-    url: endpoint, //TODO: update request URL
+    url: `prediction?action=${action}`, //TODO: update request URL
     success: (result) => {
       console.log("result is ", result);
+      predicted_action = result.prediction;
+      let endpoint= `${PHONE_IP}/${predicted_action}`
+      console.log("we are sending to ", endpoint, predicted_action)
+      $.ajax({
+        type: "GET",
+        url: endpoint, //TODO: update request URL
+        success: (result) => {
+          console.log("result is ", result);
+        },
+        error: (error) => {
+          console.error(error);
+          // alert(error);
+        },
+      });
+
     },
     error: (error) => {
       console.error(error);
       // alert(error);
     },
   });
+ 
 }
 let simulation_status = false;
 
@@ -92,10 +108,10 @@ $(function () {
 
       SimulationButton.update();
       if (last_action == "stop") {
-        $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+        $("#sim-arrow").removeClass("move-L move-R move-F move-B");
         // $("#sim-arrow").addClass("no-move");
       } else {
-        $("#sim-arrow").removeClass("move-left move-right move-up move-down");
+        $("#sim-arrow").removeClass("move-L move-R move-F move-B");
         $("#sim-arrow").addClass("move-" + last_action);
       }
     },

@@ -17,7 +17,6 @@ class Led{
       this->pin = pin;
     }
     void setup(){
-      
       pinMode(this->pin, OUTPUT);
     }
     void turnOn(){
@@ -273,7 +272,7 @@ void loop()
   server.handleClient();
 
   car.loop();
-  delay(100);
+  delay(50);
 
   //  wifi lost connection solved
   unsigned long currentMillis = millis();
@@ -288,7 +287,6 @@ void loop()
 
     if(WiFi.status() == WL_CONNECTED) {
       connectedLed.turnOn();
-      
     }else{
       connectedLed.turnOff();
     }
