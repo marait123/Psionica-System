@@ -45,7 +45,7 @@ Motor leftMotor(15, 2), rightMotor(5, 18);
 const char* loc_ip = "192.168.1.159";
 IPAddress local_IP(192, 168, 1, 159);
 // Set your Gateway IP address
-IPAddress gateway(10, 10, 10, 1);
+IPAddress gateway(192, 168, 1, 1);
 
 IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8);   //optional
