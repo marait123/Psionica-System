@@ -1,21 +1,165 @@
-    /* 
+/* 
     the part of the header
     */
-    
-    body{
-      background-color: #F5F5F5;
-    }
-    * {
-        color: black;
-    }
-      ul {
+:root {
+  --lightBlue: #c4e8f7;
+  --lighteWhite: #f2f2f2;
+  --textColor: black;
+  --darkBlue: #f2f2f2;
+  --logo-sz: 60px;
+  --arrow-sz: 75px;
+}
+
+body {
+  background-color: var(--lighteWhite);
+}
+* {
+  color: var(--textColor);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: var(--lightBlue);
+  height: 72px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.logo-container {
+  align-self: flex-start;
+}
+.nav-item {
+}
+.logo-img {
+  width: var(--logo-sz);
+  height: var(--logo-sz);
+}
+.logo-text {
+  font-size: 3rem;
+}
+.sim-div {
+  min-height: 400px;
+}
+
+.control-content,
+.thinking-content {
+  /* background-color: red; */
+  min-height: 400px;
+}
+.control-content {
+  border-right: 1px solid black;
+}
+
+@media only screen and (max-width: 768px) {
+  .control-content {
+    border-right: 0px;
+
+    border-bottom: 1px solid black;
+  }
+}
+
+.thinking-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.head-content {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+.head-img {
+  width: 100%;
+}
+
+.imagination-img {
+  position: absolute;
+  top: 48px;
+  left: 127px;
+  width: 168px;
+  display: none;
+}
+.shake-side-img {
+  animation: shake_side_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_side_aanimation {
+  0% {
+    transform: translate(-40px, 0);
+  }
+
+  100% {
+    /* background-color: red; */
+    transform: translate(40px, 0);
+  }
+}
+.shake-updown-img {
+  animation: shake_updown_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_updown_aanimation {
+  0% {
+    transform: translate(0, -40px);
+  }
+
+  100% {
+    /* background-color: red; */
+    transform: translate(0, 40px);
+  }
+}
+
+
+.shake-left-img {
+  animation: shake_left_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_left_aanimation {
+  0% {
+  }
+
+  100% {
+    transform:  rotate(30deg);
+  }
+}
+
+.shake-right-img {
+  animation: shake_right_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_right_aanimation {
+  0% {
+  }
+
+  100% {
+    transform:    rotate(-30deg);
+  }
+}
+
+
+.shake-leg-img {
+  animation: shake_leg_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_leg_aanimation {
+  0% {
+    transform: translate(0, -40px) rotate(10deg)  ;
+
+  }
+
+  100% {
+    transform: translate(0, 40px)   rotate(-10deg);
+  }
+}
+
+/* ul.navbar {
         list-style-type: none;
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color:#24A4D6      ;
+        background-color:#c4e8f7;
+        height: 72px;
       }
+      .logo{
 
+      }
       li {
         float: left;
       }
@@ -23,16 +167,14 @@
         display: block;
         color:  #fff6bd;
 
-        /* color: white; */
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
-      }
-      li a {
+      } */
+/* li a {
         display: block;
         color:  #fff6bd;
 
-        /* color: white; */
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
@@ -40,12 +182,11 @@
 
       li a:hover {
         background-color: #fff6bd;
-        /* color:  ; */
 
         text-decoration: none;
-      }
+      } */
 /* arrow part */
-    :root {
+/* :root {
         --arrow_distance: 100px;
         --white: #ffffff;
     }
@@ -139,4 +280,4 @@
       .timeNow{
         color:  #fff6bd;
           
-      }
+      } */

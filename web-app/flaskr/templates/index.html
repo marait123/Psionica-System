@@ -13,29 +13,32 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+
+    <!-- jquery should come first because others use it -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+   <!-- your user defined scripts -->
     <script
     type="text/javascript"
     src="{{ url_for('static', filename='js/setup.js') }}"
   ></script>
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
     <script
       type="text/javascript"
-      src="{{ url_for('static', filename='js/index.js') }}"
+      src="{{ url_for('static', filename='js/simulation.js') }}"
     ></script>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/index.css')}}"
     />
-
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/simulation.css')}}"
+  />
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/socket.io.min.js') }}"
     ></script>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/simulationtab.css')}}"
-    />
+
 
     <script
       type="text/javascript"
@@ -43,101 +46,119 @@
     ></script>
   </head>
   <body>
-    <ul>
-      <li>
-        <div class="active logo">Psionica</div>
-      </li>
-      <li><a href="#manualTab">Manual</a></li>
-      <li><a href="#simulationTab">Simulation</a></li>
-    </ul>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="timeContainer">
-            time now is <span class="timeNow">12:30</span>
-          </div>
+    <div class="navbar">
+        <div class="logo-container">
+          <img class="logo-img" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" srcset="">
+
         </div>
-      </div>
+    </div>
+    <div class="container-fluid sim-div">
       <div class="row">
-        <div class="col-md-12">
-          <div class="timeContainer">
-            predicted vs true action <span class="predVsTrue">-----</span>
+        <div class="control-content control col-sm-12 col-md-6">
+          <div class="row px-2 py-3 section-title">
+            choose the command you want to think of
           </div>
-        </div>
-      </div>
-      <div class="row manualTab">
-        <div class="col-md-12">
-          <div tabindex="0" class="greenCard control">
-            <!-- http://197.46.252.72:12345 -->
-            <!-- ${PHONE_IP} -->
-            <div
+            <div  class="simulation-body" style="width: 400px; height: 400px;">
+              <div
               onclick="send_command(`F`)"
-              class="arrow up-arrow"
+              class="sim-arrow arrow up-arrow"
             >
-              <img
-                src="{{ url_for('static', filename='img/up-arrow.png') }}"
-                alt=""
-              />
+              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/up-arrow.png') }}" >
+            
             </div>
             <div
               onclick="send_command(`L`)"
-              class="arrow left-arrow"
+              class="sim-arrow arrow left-arrow"
             >
-              <img
-                src="{{ url_for('static', filename='img/left-arrow.png') }}"
-                alt=""
-              />
+              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/left-arrow.png') }}" >
+    
             </div>
             <div
               onclick="send_command(`R`)"
-              class="arrow right-arrow"
+              class="sim-arrow arrow right-arrow"
             >
-              <img
-                src="{{ url_for('static', filename='img/right-arrow.png') }}"
-                alt=""
-              />
+              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/right-arrow.png') }}" >
+    
             </div>
             <div
               onclick="send_command(`B`)"
-              class="arrow down-arrow"
+              class="sim-arrow arrow down-arrow"
             >
-              <img
-                src="{{ url_for('static', filename='img/down-arrow.png') }}"
-                alt=""
-              />
+              <img  class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/down-arrow.png') }}" >
+       
+    
+            </div> 
             </div>
-            <!-- <div onclick="send_command(`S`)" class="space">
-              stop
-            </div> -->
-          </div>
+           
+
+            <!---->
+          
+
+        
         </div>
-      </div>
-      <div style="display: none" class="row simulationTab">
-        <div class="col-md-12">
-          <div class="greenCard">
-            <div class="simulation-header">
-              <button
-                id="sim-btn"
-                onclick="toggle_simulation()"
-                type="button"
-                class="btn btn-info sim-btn"
-              >
-                start simulation
-              </button>
-            </div>
-            <div class="simulation-body">
-              <div id="sim-arrow" onclick="" class="sim-arrow move-R">
-                <img
-                  src="{{ url_for('static', filename='img/up-arrow.png') }}"
-                  alt=""
-                />
-              </div>
-            </div>
+        <div class="thinking-content col-sm-12 col-md-6">
+          
+          <div class="head-content">
+
+            <img class="head-img" src="{{ url_for('static', filename='img/head.png') }}" alt="" srcset="">
+            <img  id="leg-imagine" class="imagination-img shake-leg-img" src="{{ url_for('static', filename='img/leg.png') }}" alt="" srcset="">
+            <img id="left-hand-imagine" class="imagination-img shake-left-img" src="{{ url_for('static', filename='img/left-hand.png') }}" alt="" srcset="">
+            <img   id="right-hand-imagine" class="imagination-img shake-right-img" src="{{ url_for('static', filename='img/right-hand.png') }}" alt="" srcset="">
+            <img id="tongue-imagine" class="imagination-img shake-side-img" src="{{ url_for('static', filename='img/tongue.png') }}" alt="" srcset="">
+          
+          
           </div>
+          
+
         </div>
       </div>
     </div>
+    <div class="container-fluid bg-light " id="featured-3">
+      <h2 class="pb-2 border-bottom">How to use the simulator</h2>
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-white fs-2 mb-3">
+            
+            <img width="75px" height="75px" src="{{ url_for('static', filename='img/left-arrow.png') }}" >
+          </div>
+          <h2>Left Arrow</h2>
+          <p>user wants to move to the left</p>
+          
+        </div>
+        
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-white fs-2 mb-3">
+            
+            <img width="75px" height="75px" src="{{ url_for('static', filename='img/right-arrow.png') }}" >
+          </div>
+          <h2>right Arrow</h2>
+          <p>user wants to move to the right</p>
+          
+        </div>
+        
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-white fs-2 mb-3">
+            
+            <img width="75px" height="75px" src="{{ url_for('static', filename='img/up-arrow.png') }}" >
+          </div>
+          <h2>up Arrow</h2>
+          <p>user wants to move forward</p>
+          
+        </div>
+        
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-white fs-2 mb-3">
+            
+            <img width="75px" height="75px" src="{{ url_for('static', filename='img/down-arrow.png') }}" >
+          </div>
+          <h2>down Arrow</h2>
+          <p>user wants to move to backward</p>
+          
+        </div>
+
+      </div>
+    </div>  
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>
 </html>
