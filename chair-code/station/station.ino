@@ -180,7 +180,7 @@ car.setup();
      motion_start_time = millis();
      DynamicJsonDocument doc(512);
     doc["status"] = "move forward";
-    doc["speed"] = 15;
+    // doc["speed"] = 15;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -195,7 +195,7 @@ car.setup();
 
      DynamicJsonDocument doc(512);
     doc["status"] = "move backward";
-    doc["speed"] = 10;
+    // doc["speed"] = 10;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -209,7 +209,7 @@ car.setup();
      motion_start_time = millis();
     DynamicJsonDocument doc(512);
     doc["status"] = "turning left";
-    doc["speed"] = 5;
+    // doc["speed"] = 5;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -224,7 +224,7 @@ car.setup();
              
      DynamicJsonDocument doc(512);
     doc["status"] = "turning right";
-    doc["speed"] = 5;
+    // doc["speed"] = 5;
 
     Serial.print(F("Stream..."));
     String buf;

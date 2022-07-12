@@ -1,7 +1,10 @@
     /* 
     the part of the header
     */
-       
+    
+    body{
+      background-color: #F5F5F5;
+    }
     * {
         color: black;
     }
@@ -10,7 +13,7 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color:#02735E    ;
+        background-color:#24A4D6      ;
       }
 
       li {
@@ -61,7 +64,7 @@
         flex-direction: column;
         margin-top: 20px;
         margin-bottom: 20px;
-        background-color: #007A78;
+        background-color: #0071B0 ;
         position: relative;
         min-height: 500px;
       }
@@ -129,7 +132,7 @@
       .timeContainer {
         color:  #bda717;
 
-        background-color: #007a78;
+        background-color: #0071B0 ;
         padding: 10px;
         margin-top: 10px;
       }
