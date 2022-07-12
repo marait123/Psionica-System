@@ -97,7 +97,7 @@
         
         </div>
         <div class="thinking-content col-sm-12 col-md-6">
-          
+          <p class="section-title">user is thinking of</p>
           <div class="head-content">
 
             <img class="head-img" src="{{ url_for('static', filename='img/head.png') }}" alt="" srcset="">
@@ -113,7 +113,38 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid bg-light " id="featured-3">
+    <div style="background-color: rgb(140, 187, 250);" class="row">
+      <div class="col-md-6">
+        <div class="text-center section-title col-md-12">the predicted class of imagination </div>
+        <div class="col-md-12">
+          <div class="head-prediction">
+  
+            <img  id="pred-leg-imagine" class="pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/leg.png') }}" width="120px" height="120px" >
+            <img id="pred-left-hand-imagine" class="pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-hand.png') }}"width="120px" height="120px" >
+            <img   id="pred-right-hand-imagine" class="pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-hand.png') }}"width="120px" height="120px" >
+            <img id="pred-tongue-imagine" class="pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/tongue.png') }}"width="120px" height="120px" >
+          
+          
+          </div>
+  
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="text-center section-title col-md-12">movemnt direction based on prediction </div>
+        <div class="head-prediction">
+  
+          <img  id="pred-leg-imagine" class="pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/down-arrow.png') }}" width="120px" height="120px" >
+          <img id="pred-left-hand-imagine" class="pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-arrow.png') }}"width="120px" height="120px" >
+          <img   id="pred-right-hand-imagine" class="pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-arrow.png') }}"width="120px" height="120px" >
+          <img id="pred-tongue-imagine" class="pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/up-arrow.png') }}"width="120px" height="120px" >
+        
+        </div>
+        
+
+
+      </div>
+    </div>
+    <!-- <div class="container-fluid bg-light " id="featured-3">
       <h2 class="pb-2 border-bottom">How to use the simulator</h2>
       <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 
@@ -158,7 +189,8 @@
         </div>
 
       </div>
-    </div>  
+    </div>   -->
+
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>
 </html>

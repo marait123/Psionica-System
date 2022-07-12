@@ -11,6 +11,7 @@
 }
 
 body {
+  overflow-x: hidden;
   background-color: var(--lighteWhite);
 }
 * {
@@ -63,9 +64,11 @@ body {
 
 .thinking-content {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .head-content {
   position: relative;
   width: 400px;
@@ -74,79 +77,19 @@ body {
 .head-img {
   width: 100%;
 }
-
-.imagination-img {
+.center {
+  margin: 0;
   position: absolute;
-  top: 48px;
-  left: 127px;
-  width: 168px;
-  display: none;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
-.shake-side-img {
-  animation: shake_side_aanimation 0.5s linear infinite alternate;
-}
-@keyframes shake_side_aanimation {
-  0% {
-    transform: translate(-40px, 0);
-  }
+.section-title{
+  font-size: 2em;
+  color: #0f74cb;
+  text-shadow: 2px 2px #084d89;
 
-  100% {
-    /* background-color: red; */
-    transform: translate(40px, 0);
-  }
-}
-.shake-updown-img {
-  animation: shake_updown_aanimation 0.5s linear infinite alternate;
-}
-@keyframes shake_updown_aanimation {
-  0% {
-    transform: translate(0, -40px);
-  }
-
-  100% {
-    /* background-color: red; */
-    transform: translate(0, 40px);
-  }
-}
-
-
-.shake-left-img {
-  animation: shake_left_aanimation 0.5s linear infinite alternate;
-}
-@keyframes shake_left_aanimation {
-  0% {
-  }
-
-  100% {
-    transform:  rotate(30deg);
-  }
-}
-
-.shake-right-img {
-  animation: shake_right_aanimation 0.5s linear infinite alternate;
-}
-@keyframes shake_right_aanimation {
-  0% {
-  }
-
-  100% {
-    transform:    rotate(-30deg);
-  }
-}
-
-
-.shake-leg-img {
-  animation: shake_leg_aanimation 0.5s linear infinite alternate;
-}
-@keyframes shake_leg_aanimation {
-  0% {
-    transform: translate(0, -40px) rotate(10deg)  ;
-
-  }
-
-  100% {
-    transform: translate(0, 40px)   rotate(-10deg);
-  }
 }
 
 /* ul.navbar {

@@ -137,15 +137,85 @@
     background-color: #a1cbf3;
   }
 
-  .center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  
+
+.imagination-img {
+  position: absolute;
+  top: 48px;
+  left: 127px;
+  width: 168px;
+  display: none;
+}
+.shake-side-img {
+  animation: shake_side_aanimation 0.3s linear infinite alternate;
+}
+@keyframes shake_side_aanimation {
+  0% {
+    transform: translate(-20px, 0);
   }
-  .section-title{
-    font-size: 2em;
-    color: #0c3838;
+
+  100% {
+    /* background-color: red; */
+    transform: translate(20px, 0);
   }
+}
+
+.shake-left-img {
+  animation: shake_left_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_left_aanimation {
+  0% {
+  }
+
+  100% {
+    transform:  rotate(30deg);
+  }
+}
+
+.shake-right-img {
+  animation: shake_right_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_right_aanimation {
+  0% {
+  }
+
+  100% {
+    transform:    rotate(-30deg);
+  }
+}
+
+
+.shake-leg-img {
+  animation: shake_leg_aanimation 0.5s linear infinite alternate;
+}
+@keyframes shake_leg_aanimation {
+  0% {
+    transform: translate(0, -40px) rotate(10deg)  ;
+
+  }
+
+  100% {
+    transform: translate(0, 40px)   rotate(-10deg);
+  }
+}
+
+  
+
+.pred-imagination-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: none;
+
+}
+/* prediction part */
+.head-prediction{
+  background-color: #1A7AB6;
+  border-radius: 2em ;
+  width: 200px;
+  height: 200px;
+  position:  relative;
+  margin: 0 auto;
+}
