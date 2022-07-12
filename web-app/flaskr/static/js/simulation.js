@@ -31,10 +31,10 @@ let action_uiclass_map = {
 }
 
 let pred_action_uiclass_map = {
-  L:"#pred-left-hand-imagine",
-  R:"#pred-right-hand-imagine",
-  F:"#pred-tongue-imagine",
-  B:"#pred-leg-imagine",
+  L:".pred-left-hand-imagine",
+  R:".pred-right-hand-imagine",
+  F:".pred-tongue-imagine",
+  B:".pred-leg-imagine",
 }
 
 
@@ -74,7 +74,7 @@ try {
   if(true_action){
     hide_animations();
     $(action_uiclass_map[true_action]).show()
-    timeout_id = setTimeout(hide_animations, 2000);
+    timeout_id = setTimeout(hide_animations, SIMULATION_INTERVAL);
   }
 
 

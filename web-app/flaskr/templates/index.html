@@ -55,10 +55,10 @@
     <div class="container-fluid sim-div">
       <div class="row">
         <div class="control-content control col-sm-12 col-md-6">
-          <div class="row px-2 py-3 section-title">
+          <div class=" px-2 py-3  text-center section-title">
             choose the command you want to think of
           </div>
-            <div  class="simulation-body" style="width: 400px; height: 400px;">
+            <div  class="simulation-body" style="width: 400px; height: 400px; margin:0 auto;">
               <div
               onclick="send_command(`F`)"
               class="sim-arrow arrow up-arrow"
@@ -113,16 +113,16 @@
         </div>
       </div>
     </div>
-    <div style="background-color: rgb(140, 187, 250);" class="row">
+    <div  class="prediction-content py-3 row">
       <div class="col-md-6">
         <div class="text-center section-title col-md-12">the predicted class of imagination </div>
         <div class="col-md-12">
           <div class="head-prediction">
   
-            <img  id="pred-leg-imagine" class="pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/leg.png') }}" width="120px" height="120px" >
-            <img id="pred-left-hand-imagine" class="pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-hand.png') }}"width="120px" height="120px" >
-            <img   id="pred-right-hand-imagine" class="pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-hand.png') }}"width="120px" height="120px" >
-            <img id="pred-tongue-imagine" class="pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/tongue.png') }}"width="120px" height="120px" >
+            <img  class="pred-leg-imagine pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/leg.png') }}" width="120px" height="120px" >
+            <img class="pred-left-hand-imagine pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-hand.png') }}"width="120px" height="120px" >
+            <img   class="pred-right-hand-imagine pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-hand.png') }}"width="120px" height="120px" >
+            <img class="pred-tongue-imagine pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/tongue.png') }}"width="120px" height="120px" >
           
           
           </div>
@@ -133,10 +133,10 @@
         <div class="text-center section-title col-md-12">movemnt direction based on prediction </div>
         <div class="head-prediction">
   
-          <img  id="pred-leg-imagine" class="pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/down-arrow.png') }}" width="120px" height="120px" >
-          <img id="pred-left-hand-imagine" class="pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-arrow.png') }}"width="120px" height="120px" >
-          <img   id="pred-right-hand-imagine" class="pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-arrow.png') }}"width="120px" height="120px" >
-          <img id="pred-tongue-imagine" class="pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/up-arrow.png') }}"width="120px" height="120px" >
+          <img  class="pred-leg-imagine pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/down-arrow.png') }}" width="120px" height="120px" >
+          <img class="pred-left-hand-imagine pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-arrow.png') }}"width="120px" height="120px" >
+          <img   class="pred-right-hand-imagine pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-arrow.png') }}"width="120px" height="120px" >
+          <img class="pred-tongue-imagine pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/up-arrow.png') }}"width="120px" height="120px" >
         
         </div>
         

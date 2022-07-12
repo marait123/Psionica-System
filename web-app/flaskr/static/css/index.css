@@ -22,8 +22,14 @@ body {
 
 .navbar {
   overflow: hidden;
-  background-color: var(--lightBlue);
-  height: 72px;
+  /* background-color: var(--lightBlue); */
+ 
+  background: rgb(156,249,255);
+background: linear-gradient(90deg, rgba(156,249,255,1) 9%, rgba(9,9,121,1) 100%, rgba(2,0,36,1) 100%);
+-webkit-box-shadow: 0px 4px 19px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 4px 19px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 4px 19px 0px rgba(0,0,0,0.75);
+height: 72px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -49,6 +55,7 @@ body {
 .thinking-content {
   /* background-color: red; */
   min-height: 400px;
+  
 }
 .control-content {
   border-right: 1px solid black;
@@ -88,10 +95,17 @@ body {
 .section-title{
   font-size: 2em;
   color: #0f74cb;
-  text-shadow: 2px 2px #084d89;
+  text-shadow: 1px 1px #084d89;
 
 }
-
+.prediction-content{
+  /* border-top: 1px solid black; */
+  -webkit-box-shadow: 0px -6px 9px -4px rgba(163,161,163,1);
+  -moz-box-shadow: 0px -6px 9px -4px rgba(163,161,163,1);
+  box-shadow: 0px -6px 9px -4px rgba(163,161,163,1);
+  /* background: rgb(156,249,255);
+  background: radial-gradient(circle, rgba(156,249,255,1) 7%, rgba(22,152,243,1) 98%); */
+}
 /* ul.navbar {
         list-style-type: none;
         margin: 0;
