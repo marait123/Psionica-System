@@ -16,11 +16,11 @@
 
     <!-- jquery should come first because others use it -->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-   <!-- your user defined scripts -->
+    <!-- your user defined scripts -->
     <script
-    type="text/javascript"
-    src="{{ url_for('static', filename='js/setup.js') }}"
-  ></script>
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/setup.js') }}"
+    ></script>
 
     <script
       type="text/javascript"
@@ -31,14 +31,13 @@
       href="{{ url_for('static', filename='css/index.css')}}"
     />
     <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/simulation.css')}}"
-  />
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/simulation.css')}}"
+    />
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/socket.io.min.js') }}"
     ></script>
-
 
     <script
       type="text/javascript"
@@ -47,101 +46,169 @@
   </head>
   <body>
     <div class="navbar">
-        <div class="logo-container">
-          <img class="logo-img" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" srcset="">
-
-        </div>
+      <div class="logo-container">
+        <img
+          class="logo-img"
+          src="{{ url_for('static', filename='img/logo.svg') }}"
+          alt=""
+          srcset=""
+        />
+      </div>
     </div>
     <div class="container-fluid sim-div">
       <div class="row">
         <div class="control-content control col-sm-12 col-md-6">
-          <div class=" px-2 py-3  text-center section-title">
+          <div class="px-2 py-3 text-center section-title">
             choose the command you want to think of
           </div>
-            <div  class="simulation-body" style="width: 400px; height: 400px; margin:0 auto;">
-              <div
-              onclick="send_command(`F`)"
-              class="sim-arrow arrow up-arrow"
-            >
-              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/up-arrow.png') }}" >
-            
+          <div
+            class="simulation-body"
+            style="width: 400px; height: 400px; margin: 0 auto"
+          >
+            <div onclick="send_command(`F`)" class="sim-arrow arrow up-arrow">
+              <img
+                class="center"
+                width="75px"
+                height="75px"
+                src="{{ url_for('static', filename='img/up-arrow.png') }}"
+              />
             </div>
-            <div
-              onclick="send_command(`L`)"
-              class="sim-arrow arrow left-arrow"
-            >
-              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/left-arrow.png') }}" >
-    
+            <div onclick="send_command(`L`)" class="sim-arrow arrow left-arrow">
+              <img
+                class="center"
+                width="75px"
+                height="75px"
+                src="{{ url_for('static', filename='img/left-arrow.png') }}"
+              />
             </div>
             <div
               onclick="send_command(`R`)"
               class="sim-arrow arrow right-arrow"
             >
-              <img class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/right-arrow.png') }}" >
-    
+              <img
+                class="center"
+                width="75px"
+                height="75px"
+                src="{{ url_for('static', filename='img/right-arrow.png') }}"
+              />
             </div>
-            <div
-              onclick="send_command(`B`)"
-              class="sim-arrow arrow down-arrow"
-            >
-              <img  class="center" width="75px" height="75px" src="{{ url_for('static', filename='img/down-arrow.png') }}" >
-       
-    
-            </div> 
+            <div onclick="send_command(`B`)" class="sim-arrow arrow down-arrow">
+              <img
+                class="center"
+                width="75px"
+                height="75px"
+                src="{{ url_for('static', filename='img/down-arrow.png') }}"
+              />
             </div>
-           
+          </div>
 
-            <!---->
-          
-
-        
+          <!---->
         </div>
         <div class="thinking-content col-sm-12 col-md-6">
           <p class="section-title">user is thinking of</p>
           <div class="head-content">
-
-            <img class="head-img" src="{{ url_for('static', filename='img/head.png') }}" alt="" srcset="">
-            <img  id="leg-imagine" class="imagination-img shake-leg-img" src="{{ url_for('static', filename='img/leg.png') }}" alt="" srcset="">
-            <img id="left-hand-imagine" class="imagination-img shake-left-img" src="{{ url_for('static', filename='img/left-hand.png') }}" alt="" srcset="">
-            <img   id="right-hand-imagine" class="imagination-img shake-right-img" src="{{ url_for('static', filename='img/right-hand.png') }}" alt="" srcset="">
-            <img id="tongue-imagine" class="imagination-img shake-side-img" src="{{ url_for('static', filename='img/tongue.png') }}" alt="" srcset="">
-          
-          
+            <img
+              class="head-img"
+              src="{{ url_for('static', filename='img/head.png') }}"
+              alt=""
+              srcset=""
+            />
+            <img
+              id="leg-imagine"
+              class="imagination-img shake-leg-img"
+              src="{{ url_for('static', filename='img/leg.png') }}"
+              alt=""
+              srcset=""
+            />
+            <img
+              id="left-hand-imagine"
+              class="imagination-img shake-left-img"
+              src="{{ url_for('static', filename='img/left-hand.png') }}"
+              alt=""
+              srcset=""
+            />
+            <img
+              id="right-hand-imagine"
+              class="imagination-img shake-right-img"
+              src="{{ url_for('static', filename='img/right-hand.png') }}"
+              alt=""
+              srcset=""
+            />
+            <img
+              id="tongue-imagine"
+              class="imagination-img shake-side-img"
+              src="{{ url_for('static', filename='img/tongue.png') }}"
+              alt=""
+              srcset=""
+            />
           </div>
-          
-
         </div>
       </div>
     </div>
-    <div  class="prediction-content py-3 row">
+    <div class="prediction-content py-3 row">
       <div class="col-md-6">
-        <div class="text-center section-title col-md-12">the predicted class of imagination </div>
+        <div class="text-center section-title col-md-12">
+          the predicted class of imagination
+        </div>
         <div class="col-md-12">
           <div class="head-prediction">
-  
-            <img  class="pred-leg-imagine pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/leg.png') }}" width="120px" height="120px" >
-            <img class="pred-left-hand-imagine pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-hand.png') }}"width="120px" height="120px" >
-            <img   class="pred-right-hand-imagine pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-hand.png') }}"width="120px" height="120px" >
-            <img class="pred-tongue-imagine pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/tongue.png') }}"width="120px" height="120px" >
-          
-          
+            <img
+              class="pred-leg-imagine pred-imagination-img shake-leg-img1"
+              src="{{ url_for('static', filename='img/leg.png') }}"
+              width="120px"
+              height="120px"
+            />
+            <img
+              class="pred-left-hand-imagine pred-imagination-img shake-left-img1"
+              src="{{ url_for('static', filename='img/left-hand.png') }}"
+              width="120px"
+              height="120px"
+            />
+            <img
+              class="pred-right-hand-imagine pred-imagination-img shake-right-img1"
+              src="{{ url_for('static', filename='img/right-hand.png') }}"
+              width="120px"
+              height="120px"
+            />
+            <img
+              class="pred-tongue-imagine pred-imagination-img shake-side-img1"
+              src="{{ url_for('static', filename='img/tongue.png') }}"
+              width="120px"
+              height="120px"
+            />
           </div>
-  
         </div>
       </div>
       <div class="col-md-6">
-        <div class="text-center section-title col-md-12">movemnt direction based on prediction </div>
-        <div class="head-prediction">
-  
-          <img  class="pred-leg-imagine pred-imagination-img shake-leg-img1" src="{{ url_for('static', filename='img/down-arrow.png') }}" width="120px" height="120px" >
-          <img class="pred-left-hand-imagine pred-imagination-img shake-left-img1" src="{{ url_for('static', filename='img/left-arrow.png') }}"width="120px" height="120px" >
-          <img   class="pred-right-hand-imagine pred-imagination-img shake-right-img1" src="{{ url_for('static', filename='img/right-arrow.png') }}"width="120px" height="120px" >
-          <img class="pred-tongue-imagine pred-imagination-img shake-side-img1" src="{{ url_for('static', filename='img/up-arrow.png') }}"width="120px" height="120px" >
-        
+        <div class="text-center section-title col-md-12">
+          movement direction based on prediction
         </div>
-        
-
-
+        <div class="head-prediction">
+          <img
+            class="pred-leg-imagine pred-imagination-img shake-leg-img1"
+            src="{{ url_for('static', filename='img/down-arrow.png') }}"
+            width="120px"
+            height="120px"
+          />
+          <img
+            class="pred-left-hand-imagine pred-imagination-img shake-left-img1"
+            src="{{ url_for('static', filename='img/left-arrow.png') }}"
+            width="120px"
+            height="120px"
+          />
+          <img
+            class="pred-right-hand-imagine pred-imagination-img shake-right-img1"
+            src="{{ url_for('static', filename='img/right-arrow.png') }}"
+            width="120px"
+            height="120px"
+          />
+          <img
+            class="pred-tongue-imagine pred-imagination-img shake-side-img1"
+            src="{{ url_for('static', filename='img/up-arrow.png') }}"
+            width="120px"
+            height="120px"
+          />
+        </div>
       </div>
     </div>
     <!-- <div class="container-fluid bg-light " id="featured-3">

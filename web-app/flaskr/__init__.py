@@ -15,7 +15,7 @@ from model.preprocessing import efficient_predict, model,read_file_sim
 
 test_data, actions = read_file_sim(8)
 # print(test_data.shape, actions)
-data_hash ={"L":[], "R":[], "B":[], "F":[]}
+data_hash ={"L":[], "R":[], "B":[], "F":[], "I":[]}
 for one_datum, one_label in zip(test_data, actions):
     data_hash[one_label].append(one_datum)
 
