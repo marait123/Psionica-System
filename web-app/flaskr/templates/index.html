@@ -16,6 +16,11 @@
 
     <!-- jquery should come first because others use it -->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/socket.io.min.js') }}"
+    ></script>
+
     <!-- your user defined scripts -->
     <script
       type="text/javascript"
@@ -26,6 +31,13 @@
       type="text/javascript"
       src="{{ url_for('static', filename='js/simulation.js') }}"
     ></script>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/socket.js') }}"
+    ></script>
+
+    <!--user defined css files  -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/index.css')}}"
@@ -34,15 +46,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/simulation.css')}}"
     />
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='js/socket.io.min.js') }}"
-    ></script>
-
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='js/socket.js') }}"
-    ></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/navbar.css')}}"
+    />
   </head>
   <body>
     <div class="navbar">
@@ -53,6 +60,9 @@
           alt=""
           srcset=""
         />
+      </div>
+      <div style="display: flex">
+        <div>koko</div>
       </div>
     </div>
     <div class="container-fluid sim-div">
@@ -141,6 +151,14 @@
               alt=""
               srcset=""
             />
+            <img
+              style="display: inline"
+              id="idle-imagine"
+              class="imagination-img shake-side-img"
+              src="{{ url_for('static', filename='img/none.png') }}"
+              alt=""
+              srcset=""
+            />
           </div>
         </div>
       </div>
@@ -173,6 +191,13 @@
             <img
               class="pred-tongue-imagine pred-imagination-img shake-side-img1"
               src="{{ url_for('static', filename='img/tongue.png') }}"
+              width="120px"
+              height="120px"
+            />
+            <img
+              style="display: inline"
+              class="pred-idle-imagine pred-imagination-img shake-side-img1"
+              src="{{ url_for('static', filename='img/sleeping.png') }}"
               width="120px"
               height="120px"
             />

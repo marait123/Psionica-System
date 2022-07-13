@@ -11,13 +11,17 @@ from flask_socketio import SocketIO, send,emit
 from numpy import broadcast
 from time import sleep
 import socket
-from model.preprocessing import efficient_predict, model,read_file_sim
+from model.preprocessing import predict, predict_idle,read_file_sim,read_file
 
-test_data, actions = read_file_sim(8)
+test_data, actions = read_file_sim("action_test", "A07")
 # print(test_data.shape, actions)
 data_hash ={"L":[], "R":[], "B":[], "F":[], "I":[]}
 for one_datum, one_label in zip(test_data, actions):
     data_hash[one_label].append(one_datum)
+
+activity_test_data, activity_test_label = read_file("idle_test", "A07")
+
+data_hash["I"] = activity_test_data[activity_test_label == 0]
 
 # simulation configuration
 simulation_status=False
@@ -50,7 +54,7 @@ def simulate(app):
                             data_to_choose_from = data_hash[line]
                             n = len(data_to_choose_from) 
                             action_random_thinking_index = randint(0,n-1)
-                            predicted_label = efficient_predict(data_to_choose_from[action_random_thinking_index])
+                            predicted_label = predict(data_to_choose_from[action_random_thinking_index])
                             print()
                             if line != predicted_label:
                                 miss_predictions+=1
@@ -125,8 +129,12 @@ def create_app(test_config=None):
         data_to_choose_from = data_hash[action]
         n = len(data_to_choose_from) 
         action_random_thinking_index = randint(0,n-1)
-        predicted_label = efficient_predict(data_to_choose_from[action_random_thinking_index])
-        print()
+
+        if predict_idle(data_to_choose_from[action_random_thinking_index]) == 1:
+            predicted_label = predict(data_to_choose_from[action_random_thinking_index])
+        else:
+            predicted_label = "I"
+        # print()
         return jsonify(prediction=predicted_label)
 
 
