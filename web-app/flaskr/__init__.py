@@ -4,7 +4,7 @@ import imp
 from logging import debug
 from random import random,randint
 import threading
-from flask import Flask,  request, jsonify,  render_template
+from flask import Flask,  request, jsonify,  render_template, abort
 
 from flask_cors import CORS
 from flask_socketio import SocketIO, send,emit
@@ -116,14 +116,13 @@ def create_app(test_config=None):
         # simulation_status= not simulation_status
         return jsonify(simulation_status=simulation_status, last_action=last_action)
     
-    @app.route('/dashboard', methods=['GET'])
-    def dashboard():
-        return render_template('dashboard.html')
-    
+
     @app.route('/prediction', methods=['GET'])
     def predict_actions():
         action = request.args.get("action",None)
-        assert action is not None
+        # assert action is not None
+        if action is None:
+            abort(422)
 
         print("action sent is ", action)
         data_to_choose_from = data_hash[action]
@@ -178,7 +177,7 @@ def create_app(test_config=None):
     def handle_my_custom_event(json):
         print('received json: ' + str(json))
         send("koko "+json, broadcast=True)
-        
+    app.socketio = socketio
     return app
 if __name__ == "__main__":
     print("hello all")

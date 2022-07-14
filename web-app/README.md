@@ -40,3 +40,21 @@ flask run --reload --host=0.0.0.0
 ### Run the GUI
 
 `python -m flaskr`
+
+### Run the testing
+* Change “python” to “coverage run”, so this:
+```bash
+$ python -m unittest discover
+```
+* becomes:
+```bash
+$ coverage run -m unittest discover
+```
+* Use coverage report to report on the results:
+```bash
+$ coverage report -m
+```
+For a nicer presentation, use coverage html to get annotated HTML listings detailing missed lines:
+```bash
+$ coverage html
+```
