@@ -24,52 +24,52 @@ activity_test_data, activity_test_label = read_file("idle_test", "A07")
 data_hash["I"] = activity_test_data[activity_test_label == 0]
 
 # simulation configuration
-simulation_status=False
-simulation_step = 2 # in seconds
-last_action = "stop"
-connected_clients = []
-# test_data, test_label =  
-def simulate(app):
-    global last_action
-    global simulation_status
-    correct_predictions = 0
-    miss_predictions = 0
-    with app.app_context():
-        simulation_status=True
-        with open("data/commands.txt", "r") as f:
-            for line in f.readlines():
-                if simulation_status == False:
-                    #  stop the simulation
-                    if len(connected_clients):
-                        for client in connected_clients:
-                            emit("end-simulation", {"action":"stop","miss_predictions":miss_predictions,"correct_predictions":correct_predictions}, namespace=client['namespace'], room = client['room'])
-                        last_action="stop"
-                    return
-                line = line.strip()
-                if line != "":
-                    # print(line)
-                    # print(connected_clients)
-                    if len(connected_clients):
-                        for client in connected_clients:
-                            data_to_choose_from = data_hash[line]
-                            n = len(data_to_choose_from) 
-                            action_random_thinking_index = randint(0,n-1)
-                            predicted_label = predict(data_to_choose_from[action_random_thinking_index])
-                            print()
-                            if line != predicted_label:
-                                miss_predictions+=1
-                            else:
-                                correct_predictions+=1
-                            # return jsonify()
-                            emit("new-action", {"true_action":line,"predicted_action":predicted_label}, namespace=client['namespace'], room = client['room'])
-                    last_action=line
-                sleep(simulation_step)
+# simulation_status=False
+# simulation_step = .002 # in seconds
+# last_action = "stop"
+# connected_clients = []
+# # test_data, test_label =  
+# def simulate(app):
+#     global last_action
+#     global simulation_status
+#     correct_predictions = 0
+#     miss_predictions = 0
+#     with app.app_context():
+#         simulation_status=True
+#         with open("data/commands.txt", "r") as f:
+#             for line in f.readlines():
+#                 if simulation_status == False:
+#                     #  stop the simulation
+#                     if len(connected_clients):
+#                         for client in connected_clients:
+#                             emit("end-simulation", {"action":"stop","miss_predictions":miss_predictions,"correct_predictions":correct_predictions}, namespace=client['namespace'], room = client['room'])
+#                         last_action="stop"
+#                     return
+#                 line = line.strip()
+#                 if line != "":
+#                     # print(line)
+#                     # print(connected_clients)
+#                     if len(connected_clients):
+#                         for client in connected_clients:
+#                             data_to_choose_from = data_hash[line]
+#                             n = len(data_to_choose_from) 
+#                             action_random_thinking_index = randint(0,n-1)
+#                             predicted_label = predict(data_to_choose_from[action_random_thinking_index])
+#                             print()
+#                             if line != predicted_label:
+#                                 miss_predictions+=1
+#                             else:
+#                                 correct_predictions+=1
+#                             # return jsonify()
+#                             emit("new-action", {"true_action":line,"predicted_action":predicted_label}, namespace=client['namespace'], room = client['room'])
+#                     last_action=line
+#                 sleep(simulation_step)
                 
-        if len(connected_clients):
-                for client in connected_clients:
-                    emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
-                last_action="stop"
-        simulation_status=False
+#         if len(connected_clients):
+#                 for client in connected_clients:
+#                     emit("end-simulation", {"action":"stop"}, namespace=client['namespace'], room = client['room'])
+#                 last_action="stop"
+#         simulation_status=False
         
 # simulate()
 def create_app(test_config=None):
@@ -97,24 +97,24 @@ def create_app(test_config=None):
 
         return jsonify(answer="simulator", hostname=hostname, ip=local_ip, port=12345)
     
-    @app.route('/simulation', methods=['GET'])
-    def get_simulation_status():
-        return jsonify(simulation_status=simulation_status, last_action=last_action)
+    # @app.route('/simulation', methods=['GET'])
+    # def get_simulation_status():
+    #     return jsonify(simulation_status=simulation_status, last_action=last_action)
     
-    @app.route('/simulation', methods=['PUT'])
-    def toggle_simulation():
-        global simulation_status
+    # @app.route('/simulation', methods=['PUT'])
+    # def toggle_simulation():
+    #     global simulation_status
         
-        if simulation_status == False:
-            print('start of simulation')
+    #     if simulation_status == False:
+    #         print('start of simulation')
             
-            threading.Thread(target=simulate,args=(app,)).start()
-            # simulate()
-            print("end of simulation")
-        else:
-            simulation_status = False
-        # simulation_status= not simulation_status
-        return jsonify(simulation_status=simulation_status, last_action=last_action)
+    #         threading.Thread(target=simulate,args=(app,)).start()
+    #         # simulate()
+    #         print("end of simulation")
+    #     else:
+    #         simulation_status = False
+    #     # simulation_status= not simulation_status
+    #     return jsonify(simulation_status=simulation_status, last_action=last_action)
     
 
     @app.route('/prediction', methods=['GET'])
@@ -152,32 +152,31 @@ def create_app(test_config=None):
             "error": 404,
         }), 404
     # the socket part
-    socketio = SocketIO(app)
-    @socketio.on('connect')
-    def connect():
-        print("connected socket", request.sid)
-        print("namespace", request.namespace)
-        global connected_clients
-        if request.sid not in connected_clients:
-            connected_clients.append({'namespace':request.namespace, 'room':request.sid})
+    # socketio = SocketIO(app)
+    # @socketio.on('connect')
+    # def connect():
+    #     print("connected socket", request.sid)
+    #     print("namespace", request.namespace)
+    #     global connected_clients
+    #     if request.sid not in connected_clients:
+    #         connected_clients.append({'namespace':request.namespace, 'room':request.sid})
             
-        print(request.sid)
+    #     print(request.sid)
 
-    @socketio.on('disconnect')
-    def test_disconnect():
+    # @socketio.on('disconnect')
+    # def test_disconnect():
         
-        global connected_clients
-        print("client disconnected", request.sid)
-        if request.sid in connected_clients:
-            connected_clients.remove({'namespace':request.namespace, 'room':request.sid})
+    #     global connected_clients
+    #     print("client disconnected", request.sid)
+    #     if request.sid in connected_clients:
+    #         connected_clients.remove({'namespace':request.namespace, 'room':request.sid})
             
-        print('Client disconnected')
+    #     print('Client disconnected')
     
-    @socketio.on('message')
-    def handle_my_custom_event(json):
-        print('received json: ' + str(json))
-        send("koko "+json, broadcast=True)
-    app.socketio = socketio
+    # @socketio.on('message')
+    # def handle_my_custom_event(json):
+    #     print('received json: ' + str(json))
+    #     send("koko "+json, broadcast=True)
     return app
 if __name__ == "__main__":
     print("hello all")

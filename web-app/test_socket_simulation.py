@@ -19,14 +19,22 @@ class SimulationTestCase(unittest.TestCase):
         pass
 
     # testing the greetings
-    def test_get_L_prediction_ok(self):
+    # def test_get_simulation_status_ok(self):
         
-        res = self.client().get('/simulation') # res is of a type stream
-        answer = json.loads(res.data) # data is a of type string of characters
-        print(answer)
-        self.assertIn(answer["simulation_status"], [False,True])
-        self.assertEqual(res.status_code, 200)
-    # testing the greetings
+    #     res = self.client().get('/simulation') # res is of a type stream
+    #     answer = json.loads(res.data) # data is a of type string of characters
+    #     # print(answer)
+    #     self.assertIn(answer["simulation_status"], [False,True])
+    #     self.assertEqual(res.status_code, 200)
+
+    # def test_start_simulation_ok(self):
+        
+    #     res = self.client().put('/simulation') # res is of a type stream
+    #     answer = json.loads(res.data) # data is a of type string of characters
+    #     print("test the start of simulation")
+    #     print(answer)
+    #     self.assertEqual(res.status_code, 200)
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
