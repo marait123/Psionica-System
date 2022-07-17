@@ -92,17 +92,20 @@ function send_command(action) {
       let endpoint = `${INTENDED_IP}/${predicted_action}`;
       console.log("we are sending to ", endpoint, predicted_action);
       $(pred_action_uiclass_map[predicted_action]).show();
-      $.ajax({
-        type: "GET",
-        url: endpoint, //TODO: update request URL
-        success: (result) => {
-          console.log("result is ", result);
-        },
-        error: (error) => {
-          console.error(error);
-          // alert(error);
-        },
-      });
+      if(predicted_action != "I"){
+        $.ajax({
+          type: "GET",
+          url: endpoint, //TODO: update request URL
+          success: (result) => {
+            console.log("result is ", result);
+          },  
+          error: (error) => {
+            console.error(error);
+            // alert(error);
+          },
+        });
+      }
+      
     },
     error: (error) => {
       console.error(error);
