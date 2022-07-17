@@ -128,8 +128,10 @@ car.setup();
 
     while (WiFi.status() != WL_CONNECTED)
     {
-      delay(500);
+      onLed.turnOn();
+      delay(500);    
       Serial.print(".");
+      onLed.turnOff();
     }
 
       Serial.println("");
@@ -180,7 +182,6 @@ car.setup();
      motion_start_time = millis();
      DynamicJsonDocument doc(512);
     doc["status"] = "move forward";
-    // doc["speed"] = 15;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -195,7 +196,6 @@ car.setup();
 
      DynamicJsonDocument doc(512);
     doc["status"] = "move backward";
-    // doc["speed"] = 10;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -209,7 +209,6 @@ car.setup();
      motion_start_time = millis();
     DynamicJsonDocument doc(512);
     doc["status"] = "turning left";
-    // doc["speed"] = 5;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -224,7 +223,6 @@ car.setup();
              
      DynamicJsonDocument doc(512);
     doc["status"] = "turning right";
-    // doc["speed"] = 5;
 
     Serial.print(F("Stream..."));
     String buf;
@@ -238,7 +236,6 @@ car.setup();
             {
      DynamicJsonDocument doc(512);
     doc["status"] = "stop moving";
-    doc["speed"] = 0;
     Serial.print(F("Stream..."));
     String buf;
     serializeJson(doc, buf);
