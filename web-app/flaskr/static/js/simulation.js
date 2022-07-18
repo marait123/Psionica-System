@@ -90,9 +90,10 @@ function send_command(action) {
       console.log("result is ", result);
       predicted_action = result.prediction;
       let endpoint = `${INTENDED_IP}/${predicted_action}`;
-      console.log("we are sending to ", endpoint, predicted_action);
+     
       $(pred_action_uiclass_map[predicted_action]).show();
       if(predicted_action != "I"){
+        console.log("we are sending to ", endpoint, predicted_action);
         $.ajax({
           type: "GET",
           url: endpoint, //TODO: update request URL

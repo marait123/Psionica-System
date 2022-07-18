@@ -7,6 +7,13 @@ var SIMULATION_INTERVAL = 3000;
 // CAR_IP = "http://192.168.4.1:12345"
 
 INTENDED_IP = PHONE_IP;
+function switch_mode(){
+  INTENDED_IP = INTENDED_IP == PHONE_IP ? CAR_IP : PHONE_IP;
+ 
+}
+
+
+
 console.log("we are sending to ",INTENDED_IP);
 $(function () {
   console.log("hello we are comming soon");
