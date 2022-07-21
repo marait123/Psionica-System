@@ -3,7 +3,11 @@
 A simple flask server to demonstrate basic flask.
 
 ## Getting Started
-
+### requirements 
+1. you should have test for action thinking samples placed in folder action_test 
+![action_test](./images/action_test.png)
+2. you should have test for idle thinking samples placed in folder action_test 
+![idle_test.png](./images/idle_test.png.png)
 ### Create a Virutal Enviornment
 
 Follow instructions [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) to create and activate virtual enviornment for this project.
