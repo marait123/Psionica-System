@@ -19,6 +19,21 @@ watch the video below showing a demo of our system
     .
     ├── chair-code                   # wheelchair code written in C++ & shell
 
+    ├── Psionica_Book.pdf       # GP book     
     ├── web-app                   # simulator code Written in js,html,css,python,flask,..etc.
 
     └── README.md
+
+## Components
+* wheelchair (as a prototype 4 wheeled car)
+
+![wheelchair](./images/car/car%20components.png)
+
+* simulator 
+
+![simulator](./images/simulator.png)
+
+
+* mobile app
+
+![mobile_app](./images/MobileApp.png)
